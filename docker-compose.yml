@@ -10,22 +10,57 @@ services:
     volumes:
       - "./app:/app"
 
-  passive-recon:
-    build:
-      context: .
-      dockerfile: docker/passive-recon/passive-recon.yml
-    container_name: passive-recon_minotaur
-    depends_on:
-      - rabbitmq
-
-  brute-force:
-    build:
-      context: .
-      dockerfile: docker/brute-force/brute-force.yml
-    container_name: brute-force_minotaur
+  amass:
+    build: docker/amass
+    container_name: amass_minotaur
     depends_on:
       - rabbitmq
     volumes:
-      - "./input:/tools/input"
-      - "./output:/tools/output"
+      - "./docker/input:/tools/input"
+      - "./docker/output:/tools/output"
+
+  assetfinder:
+    build: docker/assetfinder
+    container_name: assetfinder_minotaur
+    depends_on:
+      - rabbitmq
+    volumes:
+      - "./docker/input:/tools/input"
+      - "./docker/output:/tools/output"
+
+  findomain:
+    build: docker/findomain
+    container_name: findomain_minotaur
+    depends_on:
+      - rabbitmq
+    volumes:
+      - "./docker/input:/tools/input"
+      - "./docker/output:/tools/output"
+
+  subfinder:
+    build: docker/subfinder
+    container_name: subfinder_minotaur
+    depends_on:
+      - rabbitmq
+    volumes:
+      - "./docker/input:/tools/input"
+      - "./docker/output:/tools/output"
+
+  massdns:
+    build: docker/massdns
+    container_name: massdns_minotaur
+    depends_on:
+      - rabbitmq
+    volumes:
+      - "./docker/input:/tools/input"
+      - "./docker/output:/tools/output"
+
+  resolvers:
+    build: docker/resolvers
+    container_name: resolvers_minotaur
+    depends_on:
+      - rabbitmq
+    volumes:
+      - "./docker/input:/tools/input"
+      - "./docker/output:/tools/output"
 
