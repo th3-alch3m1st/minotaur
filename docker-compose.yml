@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  rabbitmq:
+    build: docker/rabbitmq/.
+    container_name: rabbitmq_minotaur
+    ports:
+       - "5672:5672"
+       - "15672:15672"
+    volumes:
+      - "./app:/app"
+
+  passive-recon:
+    build:
+      context: .
+      dockerfile: docker/passive-recon/passive-recon.yml
+    container_name: passive-recon_minotaur
+    depends_on:
+      - rabbitmq
+
+  brute-force:
+    build:
+      context: .
+      dockerfile: docker/brute-force/brute-force.yml
+    container_name: brute-force_minotaur
+    depends_on:
+      - rabbitmq
+    volumes:
+      - "./input:/tools/input"
+      - "./output:/tools/output"
+
