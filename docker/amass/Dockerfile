@@ -7,13 +7,14 @@ RUN go install ./...
 
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
-RUN apk add bash
+RUN apk add --update bash python python-dev py-pip
+RUN python -m pip install pika --upgrade
 COPY --from=build /go/bin/amass /bin/amass
 COPY --from=build /go/src/github.com/OWASP/Amass/examples/wordlists/ /wordlists/
 ENV HOME /
 
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
-ADD ./start.sh /tools/
-RUN chmod +x /tools/start.sh
-ENTRYPOINT ["/tools/start.sh"]
+ADD ./receive.py /tools/
+
+ENTRYPOINT ["python", "receive.py", "passive"]

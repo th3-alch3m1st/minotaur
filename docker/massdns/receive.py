@@ -6,6 +6,10 @@
 import pika
 import sys,os
 import time
+from subprocess import Popen, PIPE
+
+print('sleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeep massdns')
+time.sleep(20)
 
 # Connect to RabbitMQ on the localhost, if different machine use IP/hostname
 connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
@@ -31,20 +35,11 @@ print(" [*] Waiting for logs. To exit press CTRL+C")
 def callback(ch, method, properties, body):
     opt = body.split(" ")
     print(" [x] Starting %r scans for %r" % (method.routing_key, opt[1]))
-    if method.routing_key == 'passive':
-        print("Start assetfinder")
-
-        print("finished amass")
-    elif method.routing_key == 'brute':
+    if method.routing_key == 'brute':
         print("Start massdns")
-        time.sleep(10)
-        os.system('python send.py perms dom1.com')
+        process = Popen(['cat', '/tools/input/alldns.txt', stdout=PIPE, stderr=PIPE)
+        stdout, stderr = process.communicate()
         print("finished massdns")
-    elif method.routing_key == 'perms':
-        print("Start dnsgen")
-        time.sleep(10)
-        os.system('python send.py passive  dom2.com')
-        print("finished dnsgen")
 
 # This specific callback should receive msg from hello queue
 channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)

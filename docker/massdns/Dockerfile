@@ -4,7 +4,7 @@ WORKDIR /tools
 
 RUN apt-get update
 RUN apt-get install -y libldns-dev git build-essential
-RUN apt-get install -y python
+RUN apt-get install -y python python-dev python-pip
 RUN git clone https://github.com/blechschmidt/massdns.git
 
 RUN cd massdns && make
@@ -13,7 +13,6 @@ RUN mv massdns/bin/massdns /bin/massdns
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
 
-ADD ./start.sh /tools/
-RUN chmod +x /tools/start.sh
+ADD ./receive.py /tools/
 
-ENTRYPOINT ["/tools/start.sh"]
+ENTRYPOINT ["python", "receive.py", "brute"]
