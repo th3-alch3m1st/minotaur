@@ -5,6 +5,7 @@ WORKDIR /tools
 RUN apt-get update
 RUN apt-get install -y libldns-dev git build-essential
 RUN apt-get install -y python python-dev python-pip
+RUN python -m pip install pika --upgrade
 RUN git clone https://github.com/blechschmidt/massdns.git
 
 RUN cd massdns && make

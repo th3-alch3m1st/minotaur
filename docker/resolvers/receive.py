@@ -37,8 +37,9 @@ def callback(ch, method, properties, body):
     print(" [x] Starting %r scans for %r" % (method.routing_key, opt[1]))
     if method.routing_key == 'brute':
         print("Start resolvers")
-        process = Popen(['cat', '/tools/input/alldns.txt', stdout=PIPE, stderr=PIPE)
+        process = Popen(['cat', '/tools/input/alldns.txt'], stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
+        print(stdout)
         print("finished resolvers")
 
 # This specific callback should receive msg from hello queue

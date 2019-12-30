@@ -13,6 +13,8 @@ COPY --from=build /go/bin/amass /bin/amass
 COPY --from=build /go/src/github.com/OWASP/Amass/examples/wordlists/ /wordlists/
 ENV HOME /
 
+WORKDIR /tools
+
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
 ADD ./receive.py /tools/

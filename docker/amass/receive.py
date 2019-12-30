@@ -39,6 +39,7 @@ def callback(ch, method, properties, body):
         print("Start amass")
         process = Popen(['amass', 'enum', '--passive', '-d', opt[1]], stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
+        print stdout
         print("finished amass")
 
 # This specific callback should receive msg from hello queue
