@@ -8,11 +8,19 @@ import sys,os
 import time
 from subprocess import Popen, PIPE
 
-print('sleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeep resolvers')
-time.sleep(20)
+try:
+    # Connect to RabbitMQ on the localhost, if different machine use IP/hostname
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq', connection_attempts=5, retry_delay=5))
 
-# Connect to RabbitMQ on the localhost, if different machine use IP/hostname
-connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    # https://www.programcreek.com/python/example/13392/pika.BlockingConnection
+    assert connection.is_open is True
+    assert connection.is_closed is False
+    sys.stdout.write('Connection to RabbitMQ OK')
+
+except Exception as e:
+    msg = ('ampq connection failed ({})'.format(str(e)))
+    print(msg)
+
 channel = connection.channel()
 
 # 'test' exchange to send the message to
@@ -33,17 +41,18 @@ for move in options:
 print(" [*] Waiting for logs. To exit press CTRL+C")
 
 def callback(ch, method, properties, body):
-    opt = body.split(" ")
-    print(" [x] Starting %r scans for %r" % (method.routing_key, opt[1]))
     if method.routing_key == 'brute':
         print("Start resolvers")
-        process = Popen(['cat', '/tools/input/alldns.txt'], stdout=PIPE, stderr=PIPE)
+        process = Popen(['python3', '/tools/fresh.py/fresh.py', '-o', '/tools/input/resolvers.txt'], stdout=PIPE, stderr=PIPE)
         stdout, stderr = process.communicate()
-        print(stdout)
         print("finished resolvers")
 
-# This specific callback should receive msg from hello queue
-channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
+try:
+    channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
+except pika.exceptions.ConnectionClosed:
+    sys.stdout.write('Reconnecting to RabbitMQ')
+    connection.channel()
+    channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
 
 # Never ending loop to wait for messages
 channel.start_consuming()

@@ -8,11 +8,19 @@ import sys,os
 import time
 from subprocess import Popen, PIPE
 
-print('sleeeeeeeeeeeeeeeeeeeep in findomain')
-time.sleep(20)
+try:
+    # Connect to RabbitMQ on the localhost, if different machine use IP/hostname
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq', connection_attempts=5, retry_delay=5))
 
-# Connect to RabbitMQ on the localhost, if different machine use IP/hostname
-connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+    # https://www.programcreek.com/python/example/13392/pika.BlockingConnection
+    assert connection.is_open is True
+    assert connection.is_closed is False
+    sys.stdout.write('Connection to RabbitMQ OK')
+
+except Exception as e:
+    msg = ('ampq connection failed ({})'.format(str(e)))
+    print(msg)
+
 channel = connection.channel()
 
 # 'test' exchange to send the message to
