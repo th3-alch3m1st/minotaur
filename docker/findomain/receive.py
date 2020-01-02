@@ -4,9 +4,9 @@
 
 '''
 import pika
-import sys,os
-import time
+import sys,os,time
 import app.spawn_subscriber
+from datetime import datetime
 from subprocess import Popen, PIPE
 
 options = sys.argv[1:]
@@ -17,11 +17,22 @@ if not options:
 def callback(ch, method, properties, body):
     opt = body.split(" ")
     print(" [x] Starting %r scans for %r" % (method.routing_key, opt[1]))
+
+    # Grab date and add to filename
+    now = datetime.now()
+    date = now.strftime("%Y%m%d%H%M%S")
+
+    # Check if folder exists
+    time.sleep(2)
+    filepath = '/tools/output/' + opt[1]
+    if not os.path.exists(filepath):
+        os.makedirs(filepath)
+
+    # Start scan
     if method.routing_key == 'passive':
         print("Start findomain")
-        process = Popen(['/tools/findomain-linux', '-t', opt[1], '-o'], stdout=PIPE, stderr=PIPE)
-        stdout, stderr = process.communicate()
-        print stdout
+	with open(filepath + "/findomain-" + opt[1] + "." + date,"wb") as out:
+            Popen(['/tools/findomain-linux', '-t', opt[1], '-o'], stdout=out)
         print("finished findomain")
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)

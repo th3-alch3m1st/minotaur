@@ -4,7 +4,7 @@
 
 '''
 import pika
-import sys,os
+import sys,os,time
 import app.spawn_subscriber
 from datetime import datetime
 from subprocess import Popen, PIPE
@@ -31,10 +31,8 @@ def callback(ch, method, properties, body):
     # Start scan
     if method.routing_key == 'passive':
         print("Start assetfinder")
-        with open(filepath + "/assetfinder-" + opt[1] + "." + date,"wb") as out, open(filepath + "/assetfinder-errors-" + opt[1] + "." + date,"wb") as err:
-            Popen(['/go/bin/assetfinder', opt[1]], stdout=out, stderr=err)
-        #stdout, stderr = process.communicate()
-        #print stdout
+        with open(filepath + "/assetfinder-" + opt[1] + "." + date,"wb") as out:
+            Popen(['/go/bin/assetfinder', opt[1]], stdout=out)
         print("finished assetfinder")
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)
