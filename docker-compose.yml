@@ -8,7 +8,7 @@ services:
       - "127.0.0.1:5672:5672"
       - "127.0.0.1:15672:15672"
     volumes:
-      - "./app:/app"
+      - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
 
@@ -18,6 +18,7 @@ services:
     depends_on:
       - rabbitmq
     volumes:
+      - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
 
@@ -27,6 +28,7 @@ services:
     depends_on:
       - rabbitmq
     volumes:
+      - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
 
@@ -36,6 +38,7 @@ services:
     depends_on:
       - rabbitmq
     volumes:
+      - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
 
@@ -45,6 +48,7 @@ services:
     depends_on:
       - rabbitmq
     volumes:
+      - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
 
@@ -63,6 +67,7 @@ services:
     depends_on:
       - rabbitmq
     volumes:
+      - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
 
