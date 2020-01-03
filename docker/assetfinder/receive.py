@@ -7,7 +7,7 @@ import pika
 import sys,os,time
 import app.spawn_subscriber
 from datetime import datetime
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 
 options = sys.argv[1:]
 if not options:
@@ -28,11 +28,26 @@ def callback(ch, method, properties, body):
     if not os.path.exists(filepath):
         os.makedirs(filepath)
 
+    FNULL = open(os.devnull, 'w')
+
     # Start scan
     if method.routing_key == 'passive':
         print("Start assetfinder")
         with open(filepath + "/assetfinder-" + opt[1] + "." + date,"wb") as out:
-            Popen(['/go/bin/assetfinder', opt[1]], stdout=out)
+            assetfinder_process = Popen(['/go/bin/assetfinder', opt[1]], stdout=out, stderr=STDOUT)
+            #assetfinder_process.communicate()[0]
+            assetfinder_process.wait()
+            out.flush()
+            os.fsync(out)
+            out.close()
         print("finished assetfinder")
+
+        subdomains = open(filepath + "/assetfinder-" + opt[1] + "." + date, "r")
+        for line in subdomains:
+            send_process = Popen(['python', '/tools/app/send.py', 'brute', line.rstrip()])
+            send_process.communicate()[0]
+            send_process.wait()
+            #os.stat('filename').st_size
+        print('Send results to massdns for brute force')
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)

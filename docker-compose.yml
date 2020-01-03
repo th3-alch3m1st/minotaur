@@ -52,22 +52,23 @@ services:
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
 
-#  massdns:
-#    build: docker/massdns
-#    container_name: massdns_minotaur
-#    depends_on:
-#      - rabbitmq
-#    volumes:
-#      - "./docker/input:/tools/input"
-#      - "./docker/output:/tools/output"
-
-  resolvers:
-    build: docker/resolvers
-    container_name: resolvers_minotaur
+  massdns:
+    build: docker/massdns
+    container_name: massdns_minotaur
     depends_on:
       - rabbitmq
     volumes:
       - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
+
+#  resolvers:
+#    build: docker/resolvers
+#    container_name: resolvers_minotaur
+#    depends_on:
+#      - rabbitmq
+#    volumes:
+#      - "./app:/tools/app"
+#      - "./docker/input:/tools/input"
+#      - "./docker/output:/tools/output"
 
