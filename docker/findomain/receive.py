@@ -7,7 +7,7 @@ import pika
 import sys,os,time
 import app.spawn_subscriber
 from datetime import datetime
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 
 options = sys.argv[1:]
 if not options:
@@ -31,8 +31,10 @@ def callback(ch, method, properties, body):
     # Start scan
     if method.routing_key == 'passive':
         print("Start findomain")
-	with open(filepath + "/findomain-" + opt[1] + "." + date,"wb") as out:
-            Popen(['/tools/findomain-linux', '-t', opt[1], '-o'], stdout=out)
+        findomain_process = Popen(['/tools/findomain-linux', '-t', opt[1], '-o'])
+        findomain_process.communicate()[0]
+        findomain_process.wait()
+        Popen(['mv', '/tools/' + opt[1] + '.txt', filepath + '/findomain-' + opt[1] + '.' + date])
         print("finished findomain")
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)

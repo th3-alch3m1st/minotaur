@@ -31,11 +31,14 @@ def callback(ch, method, properties, body):
     # Start scan
     if method.routing_key == 'brute':
         print("Start massdns")
-        with open(filepath + 'brute-force-' + opt[1] + '.' + date, 'wb') as out:
+        filename = filepath + 'brute-force-' + opt[1] + '.' + date
+        with open(filename, 'wb') as out:
             subbrute_process = Popen(['/tools/massdns/scripts/subbrute.py', '/tools/input/alldns.txt', opt[1]], stdout=PIPE)
             massdns_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S'], stdin=subbrute_process.stdout, stdout=out)
             subbrute_process.stdout.close()
             massdns_process.communicate()[0]
+        if os.stat(filename).st_size == 0:
+            os.remove(filename)
         print("finished massdns")
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)

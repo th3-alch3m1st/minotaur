@@ -7,3 +7,6 @@ wordpress
 user
 backup
 ftp
+smtp
+www
+support
