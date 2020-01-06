@@ -34,30 +34,28 @@ def callback(ch, method, properties, body):
     # then I will just grab all the files in there
     if method.routing_key == 'dedup':
         print("Start de-dup")
-        read_files = ['amass', 'assetfinder', 'subfinder', 'findomain']
 
-        # Change this to save file contents to a list and then sort the list
-        with open(filepath + '/subdomains-' + opt[1] + '.' + opt[2], 'wb') as out:
-            for f in read_files:
-                with open(filepath + '/' + f + '-' + opt[1] + '.' + opt[2], 'rb') as infile:
-                    out.write(infile.read())
-        out.close()
-        infile.close()
+        # File format is tools/output/amass-domain.com.date
+        tools = ['amass', 'assetfinder', 'subfinder', 'findomain']
+        subdomains = []
+        all_subdomains = []
+        for tool in tools:
+            with open(filepath + '/' + tool + '-' + opt[1] + '.' + opt[2], 'rb') as results:
+                subdomains = results.read().split()
+            results.close()
+            all_subdomains.extend(subdomains)
 
-        all_subdomains = open(filepath + '/subdomains-' + opt[1] + '.' + opt[2], 'rb').read().split()
-        subdomains = sorted(set(all_subdomains))
-        with open(filepath + '/subdomains2-' + opt[1] + '.' + opt[2], 'wb') as subdomains_file:
-            for item in subdomains:
+        sorted_subdomains = sorted(set(all_subdomains))
+        with open(filepath + '/subdomains-' + opt[1] + '.' + opt[2], 'wb') as subdomains_file:
+            for item in sorted_subdomains:
                 subdomains_file.write("%s\n" % item)
         print("finished de-dup")
 
-        '''
-        subdomains = open(filepath + "/assetfinder-" + opt[1] + "." + date, "r")
-        for line in subdomains:
-            send_process = Popen(['python', '/tools/app/send.py', 'brute', line.rstrip()])
+        for subdomain in sorted_subdomains:
+            send_process = Popen(['python', '/tools/app/send.py', 'brute', subdomain, opt[2]])
             send_process.communicate()[0]
             send_process.wait()
             #os.stat('filename').st_size
         print('Send results to massdns for brute force')
-        '''
+
 app.spawn_subscriber.rabbitmqConnection(options, callback)

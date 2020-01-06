@@ -31,7 +31,7 @@ def callback(ch, method, properties, body):
     # Start scan
     if method.routing_key == 'brute':
         print("Start massdns")
-        filename = filepath + 'brute-force-' + opt[1] + '.' + date
+        filename = filepath + 'brute-force-' + opt[1] + '.' + opt[2]
         with open(filename, 'wb') as out:
             subbrute_process = Popen(['/tools/massdns/scripts/subbrute.py', '/tools/input/alldns.txt', opt[1]], stdout=PIPE)
             massdns_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S'], stdin=subbrute_process.stdout, stdout=out)

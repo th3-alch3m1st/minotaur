@@ -42,12 +42,15 @@ def callback(ch, method, properties, body):
             out.close()
         print("finished assetfinder")
 
+        '''
+        # Part of dedup process now
         subdomains = open(filepath + "/assetfinder-" + opt[1] + "." + date, "r")
         for line in subdomains:
-            send_process = Popen(['python', '/tools/app/send.py', 'brute', line.rstrip()])
+            send_process = Popen(['python', '/tools/app/send.py', 'brute', line.rstrip(), date])
             send_process.communicate()[0]
             send_process.wait()
             #os.stat('filename').st_size
         print('Send results to massdns for brute force')
+        '''
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)
