@@ -33,6 +33,6 @@ def callback(ch, method, properties, body):
         print("Start subfinder")
         with open(filepath + "/subfinder-" + opt[1] + "." + date,"wb") as out:
             Popen(['/go/bin/subfinder', '-d', opt[1]], stdout=out)
-        print("finished subfidner")
+        print("finished subfinder")
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)

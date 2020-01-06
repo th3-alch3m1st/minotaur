@@ -45,17 +45,29 @@ def callback(ch, method, properties, body):
             results.close()
             all_subdomains.extend(subdomains)
 
+        # Anything not containing the actual domain is removed from the list
+        # E.x. hackerone.net/hacker.one will be removed if scanning hackerone.com
+        # They will be left in the tool results - assetfinder, etc.
         sorted_subdomains = sorted(set(all_subdomains))
+        for item in sorted_subdomains:
+            if opt[1] not in item:
+                sorted_subdomains.remove(item)
+
         with open(filepath + '/subdomains-' + opt[1] + '.' + opt[2], 'wb') as subdomains_file:
             for item in sorted_subdomains:
                 subdomains_file.write("%s\n" % item)
         print("finished de-dup")
 
         for subdomain in sorted_subdomains:
-            send_process = Popen(['python', '/tools/app/send.py', 'brute', subdomain, opt[2]])
-            send_process.communicate()[0]
-            send_process.wait()
-            #os.stat('filename').st_size
+            brute_process = Popen(['python', '/tools/app/send.py', 'brute', subdomain, opt[2]])
+            brute_process.communicate()[0]
+            #brute_process.wait()
+
+            permutations_process = Popen(['python', '/tools/app/send.py', 'permutations', subdomain, opt[2]])
+            permutations_process.communicate()[0]
+            #permutations_process.wait()
+
+        Popen(['python', '/tools/app/send.py', 'alive', opt[1], opt[2]])
         print('Send results to massdns for brute force')
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)

@@ -24,14 +24,14 @@ def callback(ch, method, properties, body):
     date = now.strftime("%Y%m%d%H%M%S")
 
     # Check if folder exists
-    filepath = '/tools/output/'
+    filepath = '/tools/output/brute-force'
     if not os.path.exists(filepath):
         os.makedirs(filepath)
 
     # Start scan
     if method.routing_key == 'brute':
         print("Start massdns")
-        filename = filepath + 'brute-force-' + opt[1] + '.' + opt[2]
+        filename = filepath + '/brute-force-' + opt[1] + '.' + opt[2]
         with open(filename, 'wb') as out:
             subbrute_process = Popen(['/tools/massdns/scripts/subbrute.py', '/tools/input/alldns.txt', opt[1]], stdout=PIPE)
             massdns_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S'], stdin=subbrute_process.stdout, stdout=out)
@@ -40,8 +40,15 @@ def callback(ch, method, properties, body):
         if os.stat(filename).st_size == 0:
             os.remove(filename)
         print("finished massdns")
+    elif method.routing_key == 'resolve':
+        print("Start massdns")
+        perms_file = '/tools/output/permutations/permutations-' + opt[1] + '.' + opt[2]
+        input_file = open(perms_file, 'rb')
+        with open(perms_file + '-resolved', 'wb') as out:
+            massdns_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S'], stdin=input_file, stdout=out)
+            massdns_process.communicate()[0]
+        if os.stat(perms_file + '-resolved').st_size == 0:
+            os.remove(perms_file + '-resolved')
+        print("finished massdns")
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)
-
-#/tools/massdns/scripts/subbrute.py /tools/input/alldns.txt ${line} | /bin/massdns -r /tools/input/resolvers.txt -t A -o S -w /tools/output/$line/massdns.$line.$(date +%Y%m%d%H%M%S)
-

@@ -16,4 +16,4 @@ RUN mkdir -p /tools/output
 
 ADD ./receive.py /tools/
 
-ENTRYPOINT ["python", "receive.py", "brute"]
+ENTRYPOINT ["python", "receive.py", "brute", "resolve"]

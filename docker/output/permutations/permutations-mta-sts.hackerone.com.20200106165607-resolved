@@ -1,0 +1,12 @@
+mta-stsjenkins.hackerone.com. A 10.10.34.35
+tomcat.mta-sts.hackerone.com. A 10.10.34.35
+api.hackerone.com. A 104.16.100.52
+api.hackerone.com. A 104.16.99.52
+administrators-mta-sts.hackerone.com. A 10.10.34.35
+swagger.mta-sts.hackerone.com. A 10.10.34.35
+v2mta-sts.hackerone.com. A 10.10.34.35
+mta-sts-alpha.hackerone.com. A 10.10.34.35
+azure.hackerone.com. A 10.10.34.35
+mta-stsskins.hackerone.com. A 10.10.34.35
+support.hackerone.com. CNAME hackerone.zendesk.com.
+client.mta-sts.hackerone.com. A 10.10.34.35

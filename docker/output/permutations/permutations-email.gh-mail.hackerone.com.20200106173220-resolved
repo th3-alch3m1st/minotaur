@@ -1,0 +1,11 @@
+train.email.gh-mail.hackerone.com. A 10.10.34.35
+email.private.gh-mail.hackerone.com. A 10.10.34.35
+securityemail.gh-mail.hackerone.com. A 10.10.34.36
+email.gh-mail-api.hackerone.com. A 10.10.34.36
+service.email.gh-mail.hackerone.com. A 10.10.34.35
+adm.gh-mail.hackerone.com. A 10.10.34.36
+email.gh-mailcontrol.hackerone.com. A 10.10.34.36
+email-brand.gh-mail.hackerone.com. A 10.10.34.36
+email-beta.gh-mail.hackerone.com. A 10.10.34.35
+email.gh-mail-admin.hackerone.com. A 10.10.34.35
+eadministrator.gh-administrator.hackerone.com. A 10.10.34.36

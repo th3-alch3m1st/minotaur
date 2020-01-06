@@ -1,0 +1,10 @@
+mta-sts.private.hackerone.com. A 10.10.34.35
+mta-sts.github.hackerone.com. A 10.10.34.35
+php.mta-sts.hackerone.com. A 10.10.34.35
+mta-sts.mta-sts.hackerone.com. A 10.10.34.35
+api.hackerone.com. A 104.16.100.52
+api.hackerone.com. A 104.16.99.52
+accounting-mta-sts.hackerone.com. A 10.10.34.35
+mta-sts-fw.hackerone.com. A 10.10.34.35
+support.hackerone.com. CNAME hackerone.zendesk.com.
+mta-sts-apac.hackerone.com. A 10.10.34.35

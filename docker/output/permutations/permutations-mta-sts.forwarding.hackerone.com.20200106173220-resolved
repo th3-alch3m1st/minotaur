@@ -1,0 +1,7 @@
+mta-sts.forwarding.proxy.hackerone.com. A 10.10.34.35
+mta-sts.forwarding.tpe.hackerone.com. A 10.10.34.35
+mta-sts.secure.hackerone.com. A 10.10.34.35
+hw-mta-sts.forwarding.hackerone.com. A 10.10.34.35
+tomcat-mta-sts.forwarding.hackerone.com. A 10.10.34.35
+mta-sts.forwardingnautilus.hackerone.com. A 10.10.34.35
+mta-sts.reset.hackerone.com. A 10.10.34.35

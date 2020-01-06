@@ -72,6 +72,16 @@ services:
 #      - "./docker/input:/tools/input"
 #      - "./docker/output:/tools/output"
 
+  httprobe:
+    build: docker/httprobe
+    container_name: httprobe_minotaur
+    depends_on:
+      - rabbitmq
+    volumes:
+      - "./app:/tools/app"
+      - "./docker/input:/tools/input"
+      - "./docker/output:/tools/output"
+
   dedup:
     build: docker/dedup
     container_name: dedup_minotaur
@@ -81,3 +91,20 @@ services:
       - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
+
+  permutations:
+    build: docker/permutations
+    container_name: permutations_minotaur
+    depends_on:
+      - rabbitmq
+    volumes:
+      - "./app:/tools/app"
+      - "./docker/input:/tools/input"
+      - "./docker/output:/tools/output"
+    environment:
+      - LC_ALL=C.UTF-8
+      - LANG=C.UTF-8
+
+
+
+
