@@ -19,7 +19,6 @@ def callback(ch, method, properties, body):
     print(" [x] Starting %r scans for %r" % (method.routing_key, opt[1]))
 
     # Check if folder exists
-    time.sleep(2)
     filepath = '/tools/output/permutations'
     if not os.path.exists(filepath):
         os.makedirs(filepath)
@@ -32,9 +31,12 @@ def callback(ch, method, properties, body):
             permutations_process.communicate(opt[1])
         print("finished dnsgen")
 
-        send_process = Popen([ 'python2.7', '/tools/app/send.py', 'resolve', opt[1], opt[2] ])
-        send_process.communicate()[0]
-        send_process.wait()
+        print("send to resolve")
+        Popen([ 'python2.7', '/tools/app/send.py', 'resolve', opt[1], opt[2] ])
+        print("perm1")
+        #send_process.communicate()[0]
+        print("perm2")
+        #send_process.wait()
 
     # Start Resolving
     # $TOOLS_DIR/massdns/bin/massdns - -r $TOOLS_DIR/massdns/lists/resolvers.txt -t A -o S -w $TMP_FILE
