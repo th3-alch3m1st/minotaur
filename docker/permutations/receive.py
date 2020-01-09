@@ -7,7 +7,7 @@ import pika
 import sys,os,time
 import app.spawn_subscriber
 from datetime import datetime
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
 
 options = sys.argv[1:]
 if not options:
@@ -29,17 +29,14 @@ def callback(ch, method, properties, body):
         with open(filepath + '/permutations-' + opt[1] + '.' + opt[2], 'wb') as out:
             permutations_process = Popen(['dnsgen', '-'], stdin=PIPE, stdout=out)
             permutations_process.communicate(opt[1])
+            permutations_process.wait()
+            #out.flash()
+            #os.fsync(out)
+            #out.close()
+
         print("finished dnsgen")
-
-        print("send to resolve")
-        Popen([ 'python2.7', '/tools/app/send.py', 'resolve', opt[1], opt[2] ])
-        print("perm1")
-        #send_process.communicate()[0]
-        print("perm2")
-        #send_process.wait()
-
-    # Start Resolving
-    # $TOOLS_DIR/massdns/bin/massdns - -r $TOOLS_DIR/massdns/lists/resolvers.txt -t A -o S -w $TMP_FILE
-    # ./scripts/ptr.py | ./bin/massdns -r lists/resolvers.txt -t PTR -w ptr.txt
+        # Send to resolve with massdns
+        resolve_process = Popen([ 'python2.7', '/tools/app/send.py', 'resolve', opt[1], opt[2]], stderr=STDOUT)
+        resolve_process.communicate()[0]
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)

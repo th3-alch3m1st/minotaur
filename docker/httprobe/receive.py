@@ -32,6 +32,9 @@ def callback(ch, method, properties, body):
             httprobe_process = Popen(['/go/bin/httprobe', '-p', 'http:8080', 'https:8443', '-c', '150', '-t', '500'], stdin=input_file, stdout=out, stderr=STDOUT)
             httprobe_process.communicate()[0]
             httprobe_process.wait()
+            out.flush()
+            os.fsync(out)
+            out.close()
         print("finished httprobe")
 
 app.spawn_subscriber.rabbitmqConnection(options, callback)

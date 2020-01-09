@@ -4,20 +4,20 @@
 
 '''
 import pika
-import sys
+import sys, logging
 
 # Connect to RabbitMQ on the localhost, if different machine use IP/hostname
-connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq', connection_attempts=5, retry_delay=5, heartbeat=300))
 channel = connection.channel()
 
 #'test' exchange to send the message to
 channel.exchange_declare(exchange='test', exchange_type='direct')
 
-severity = sys.argv[1] if len(sys.argv) >1 else 'info'
+scan_type = sys.argv[1] if len(sys.argv) >1 else 'info'
 message = ' '.join(sys.argv[1:]) or "info"
 
-channel.basic_publish(exchange='test', routing_key=severity, body=message)
+channel.basic_publish(exchange='test', routing_key=scan_type, body=message)
 
-print(" [x] Sent %r:%r" % (severity, message))
+print(" [x] Sent %r:%r" % (scan_type, message))
 
-connection.close()
+channel.close()

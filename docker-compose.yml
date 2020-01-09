@@ -5,8 +5,8 @@ services:
     build: docker/rabbitmq
     container_name: rabbitmq_minotaur
     ports:
-      - "127.0.0.1:5672:5672"
-      - "127.0.0.1:15672:15672"
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - "./app:/tools/app"
       - "./docker/input:/tools/input"
@@ -104,7 +104,4 @@ services:
     environment:
       - LC_ALL=C.UTF-8
       - LANG=C.UTF-8
-
-
-
 

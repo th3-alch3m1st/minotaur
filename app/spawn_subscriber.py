@@ -4,15 +4,17 @@
 
 '''
 import pika
-import sys,os
+import sys,os,logging
 from datetime import datetime
 from subprocess import Popen, PIPE
+
+logging.basicConfig()
 
 def rabbitmqConnection(options, callback):
     while True:
         try:
             # Connect to RabbitMQ using IP/hostname
-            connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq', connection_attempts=5, retry_delay=5))
+            connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq', connection_attempts=5, retry_delay=5, heartbeat=300))
 
             assert connection.is_open is True
             assert connection.is_closed is False
@@ -42,11 +44,11 @@ def rabbitmqConnection(options, callback):
         try:
             # Never ending loop to wait for messages
             channel.start_consuming()
-        except pika.exceptions.ConnectionClosed:
-            print('Connection closed. Reconnecting to RabbitMQ')
-            continue
         except KeyboardInterrupt:
             channel.stop_consuming()
+        except:
+            print('Connection closed. Reconnecting to RabbitMQ')
+            continue
 
-        connection.close()
+        channel.close()
         break

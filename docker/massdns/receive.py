@@ -54,14 +54,13 @@ def callback(ch, method, properties, body):
                 clean_file.close()
             if os.stat(clean_filename).st_size == 0:
                 os.remove(clean_filename)
-            os.remove(filename)
+            #os.remove(filename)
         print("finished massdns")
     elif method.routing_key == 'resolve':
         print("Start massdns")
         perms_file = '/tools/output/permutations/permutations-' + opt[1] + '.' + opt[2]
-        input_file = open(perms_file, 'rb')
         with open(perms_file + '-resolved', 'wb') as out:
-            massdns_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S'], stdin=input_file, stdout=out)
+            massdns_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S', perms_file], stdout=out)
             massdns_process.communicate()[0]
             out.flush()
             os.fsync(out)
@@ -79,8 +78,8 @@ def callback(ch, method, properties, body):
 
             if os.stat(clean_filename).st_size == 0:
                 os.remove(clean_filename)
-            os.remove(perms_file + '-resolved')
-        os.remove(perms_file)
+            #os.remove(perms_file + '-resolved')
+        #os.remove(perms_file)
 
         print("finished massdns")
 
