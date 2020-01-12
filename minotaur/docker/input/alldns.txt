@@ -1,0 +1,12 @@
+test
+ns
+mail
+uat
+admin
+wordpress
+user
+backup
+ftp
+smtp
+www
+support
