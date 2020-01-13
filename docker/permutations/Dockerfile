@@ -27,6 +27,6 @@ RUN pip3 install dnsgen
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
 
-ADD ./receive.py /tools/
+ADD ./consumer.py /tools/
 
-ENTRYPOINT ["python2.7", "/tools/receive.py", "permutations"]
+ENTRYPOINT ["python2.7", "/tools/consumer.py", "permutations"]

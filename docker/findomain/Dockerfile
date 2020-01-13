@@ -8,9 +8,9 @@ WORKDIR /tools
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
 
-ADD ./receive.py /tools/
+ADD ./consumer.py /tools/
 
 RUN wget https://github.com/Edu4rdSHL/findomain/releases/latest/download/findomain-linux
 RUN chmod +x findomain-linux
 
-ENTRYPOINT ["python", "/tools/receive.py", "passive"]
+ENTRYPOINT ["python", "/tools/consumer.py", "passive"]

@@ -20,6 +20,6 @@ RUN cd fresh.py && chmod +x clean.sh
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
 
-ADD ./receive.py /tools/
+ADD ./consumer.py /tools/
 
-ENTRYPOINT ["python", "receive.py", "brute", "resolve"]
+ENTRYPOINT ["python", "consumer.py", "brute"]

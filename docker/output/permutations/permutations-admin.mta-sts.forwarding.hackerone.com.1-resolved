@@ -1,0 +1,6 @@
+tomcat.hackerone.com. A 10.10.34.35
+w3.hackerone.com. A 10.10.34.35
+restricted.hackerone.com. A 10.10.34.35
+support.hackerone.com. CNAME hackerone.zendesk.com.
+api.hackerone.com. A 104.16.99.52
+api.hackerone.com. A 104.16.100.52
