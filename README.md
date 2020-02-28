@@ -1,3 +1,3 @@
-# minotaur
+# Minotaur
 
-An automated scanning tools using Dockers & RabbitMQ to help with bug bounties
+An automated scanning tool using Dockers & RabbitMQ to help with bug bounties
