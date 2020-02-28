@@ -22,3 +22,4 @@ An automated scanning tool using Dockers & RabbitMQ to help with bug bounties
 - [ ] Pull fresh Resolvers (via cronjob)
 - [ ] Scan IP found from Massdns step for Open Ports (masscan / nmap)
 - [ ] Add shuffleDNS & dnsvalidator tools to wrap arround Massdns
+- [ ] Add waybackmachine/commoncrawl results
