@@ -18,7 +18,7 @@ An automated scanning tool using Dockers & RabbitMQ to help with bug bounties
 ## To Do
 
 - [ ] Add Dirsearch implementation
-- [ ] Add Rapid7 Sonar Project Implementation
+- [ ] Add Rapid7 Sonar 
 - [ ] Pull fresh Resolvers (via cronjob)
 - [ ] Scan IP found from Massdns step for Open Ports (masscan / nmap)
 - [ ] Add shuffleDNS & dnsvalidator tools to wrap arround Massdns
