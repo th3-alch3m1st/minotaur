@@ -20,4 +20,4 @@ RUN mkdir -p /tools/output
 
 ADD ./consumer.py /tools/
 
-ENTRYPOINT ["python", "/tools/consumer.py", "passive"]
+ENTRYPOINT ["python", "/tools/consumer.py", "subfinder"]

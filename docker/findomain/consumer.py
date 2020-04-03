@@ -36,7 +36,7 @@ def do_work(conn, ch, delivery_tag, body):
     domain = str(opt[1])
     date = str(opt[2])
 
-    if opt[0] == 'passive':
+    if opt[0] == 'findomain':
 
         filepath = '/tools/output/' + domain
         if not os.path.exists(filepath):
@@ -49,6 +49,10 @@ def do_work(conn, ch, delivery_tag, body):
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
+
+    option = 'subfinder'
+    message = option + ' ' + domain + ' ' + date
+    app.send.publish(option, message)
 
 
 def on_message(ch, method_frame, _header_frame, body, args):

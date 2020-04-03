@@ -29,7 +29,7 @@ def callback(ch, method, properties, body):
         print("Start httprobe")
         input_file = open(filepath + '/subdomains-' + opt[1] + '.' + opt[2], 'rb')
         with open(filepath + "/alive-" + opt[1] + "." + opt[2],"wb") as out:
-            httprobe_process = Popen(['/go/bin/httprobe', '-p', 'http:8080', 'https:8443', '-c', '150', '-t', '500'], stdin=input_file, stdout=out, stderr=STDOUT)
+            httprobe_process = Popen(['/go/bin/httprobe', '-p', 'http:8080', 'https:8443', 'http:8888', 'https:8080' '-c', '150', '-t', '500'], stdin=input_file, stdout=out, stderr=STDOUT)
             httprobe_process.communicate()[0]
             httprobe_process.wait()
             out.flush()

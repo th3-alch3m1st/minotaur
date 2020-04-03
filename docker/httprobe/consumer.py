@@ -36,45 +36,27 @@ def do_work(conn, ch, delivery_tag, body):
     domain = opt[1]
     date = opt[2]
 
-    if opt[0] == 'dedup':
+    if opt[0] == 'alive':
 
         filepath = '/tools/output/' + domain
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
-	tools = ['amass', 'assetfinder', 'subfinder', 'findomain', 'sonar']
-	subdomains = []
-	all_subdomains = []
-
-	for tool in tools:
-	    with open(filepath + '/' + tool + '-' + domain + '.' + date, 'rb') as results:
-		subdomains = results.read().split()
-	    all_subdomains.extend(subdomains)
-
-	sorted_subdomains = sorted(set(all_subdomains))
-	for item in sorted_subdomains:
-	    if domain not in item:
-		sorted_subdomains.remove(item)
-
-        with open(filepath + "/subdomains-" + domain + "." + date, "wb") as subdomains_file:
-	    for subd in sorted_subdomains:
-		subdomains_file.write("%s\n" % subd)
+        input_file = open(filepath + '/subdomains-' + opt[1] + '.' + opt[2], 'rb')
+        with open(filepath + "/alive-" + opt[1] + "." + opt[2],"wb") as out:
+            httprobe_process = Popen(['/go/bin/httprobe', '-p', 'http:8080', 'https:8443', 'https:9443', 'http:8888', 'https:8080', 'http:8000', 'https:9001', '-c', '150', '-t', '20000'], stdin=input_file, stdout=out, stderr=STDOUT)
+            httprobe_process.communicate()[0]
+            httprobe_process.wait()
+            out.flush()
+            os.fsync(out)
+            out.close()
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
 
-#    for subdomain in sorted_subdomains:
-#        option = 'alive'
-#	message = option + ' ' + subdomain + ' ' + date
-#	app.send.publish(option, message)
-
-        #option = 'permutations'
-	#message = option + ' ' + domain + ' ' + date
-	#app.send.publish(option, message)
-
-    option = 'alive'
-    message = option + ' ' + domain + ' ' + date
-    app.send.publish(option, message)
+#    option = 'brute'
+#    message = option + ' ' + domain + ' ' + date
+#    app.send.publish(option, message)
 
 
 def on_message(ch, method_frame, _header_frame, body, args):

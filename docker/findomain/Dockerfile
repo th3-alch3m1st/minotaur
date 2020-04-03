@@ -13,4 +13,4 @@ ADD ./consumer.py /tools/
 RUN wget https://github.com/Edu4rdSHL/findomain/releases/latest/download/findomain-linux
 RUN chmod +x findomain-linux
 
-ENTRYPOINT ["python", "/tools/consumer.py", "passive"]
+ENTRYPOINT ["python", "/tools/consumer.py", "findomain"]

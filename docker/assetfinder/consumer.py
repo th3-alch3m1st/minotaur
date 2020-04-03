@@ -5,6 +5,7 @@ import functools
 import logging
 import threading
 import time
+from datetime import datetime
 import pika
 import sys,os
 from subprocess import Popen, PIPE, STDOUT
@@ -34,21 +35,27 @@ def do_work(conn, ch, delivery_tag, body):
 
     opt = body.split(" ")
     domain = opt[1]
-    date = opt[2]
 
-    if opt[0] == 'passive':
+    # Grab date and add to filename
+    now = datetime.now()
+    date = now.strftime("%Y%m%d%H%M%S")
+
+    if opt[0] == 'assetfinder':
 
         filepath = '/tools/output/' + domain
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
-        with open(filepath + "/assetfinder-" + domain + "." + date, "wb") as out:
-            assetfinder_process = Popen(['/go/bin/assetfinder', domain], stdout=out)
+        with open(filepath + "/assetfinder-" + domain + "." + date, "wb") as out_assetfinder:
+            assetfinder_process = Popen(['/go/bin/assetfinder', domain], stdout=out_assetfinder)
+
+        with open(filepath + "/sonar-" + domain + "." + date, "wb") as out_crobat:
+            crobat_process = Popen(['/go/bin/crobat-client', '-s', domain], stdout=out_crobat)
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
 
-    option = 'brute'
+    option = 'findomain'
     message = option + ' ' + domain + ' ' + date
     app.send.publish(option, message)
 

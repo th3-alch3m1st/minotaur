@@ -9,6 +9,6 @@ WORKDIR /tools
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
 
-ADD ./receive.py /tools/
+ADD ./consumer.py /tools/
 
-ENTRYPOINT ["python", "receive.py", "alive"]
+ENTRYPOINT ["python", "/tools/consumer.py", "alive"]

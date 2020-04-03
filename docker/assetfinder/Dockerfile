@@ -4,11 +4,13 @@ RUN apk add --update bash python python-dev py-pip
 RUN python -m pip install pika --upgrade
 
 RUN go get -u github.com/tomnomnom/assetfinder
+RUN go get github.com/cgboal/sonarsearch/crobat-client
 
 WORKDIR /tools
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
 
 ADD ./consumer.py /tools/
+ADD ./crobatrc /root/.crobatrc
 
-ENTRYPOINT ["python", "/tools/consumer.py", "passive"]
+ENTRYPOINT ["python", "/tools/consumer.py", "assetfinder"]

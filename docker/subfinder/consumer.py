@@ -36,7 +36,7 @@ def do_work(conn, ch, delivery_tag, body):
     domain = opt[1]
     date = opt[2]
 
-    if opt[0] == 'passive':
+    if opt[0] == 'subfinder':
 
         filepath = '/tools/output/' + domain
         if not os.path.exists(filepath):
@@ -47,6 +47,10 @@ def do_work(conn, ch, delivery_tag, body):
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
+
+    option = 'amass'
+    message = option + ' ' + domain + ' ' + date
+    app.send.publish(option, message)
 
 
 def on_message(ch, method_frame, _header_frame, body, args):
