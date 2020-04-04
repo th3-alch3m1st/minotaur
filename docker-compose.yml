@@ -92,6 +92,16 @@ services:
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
   
+  crithit:
+    build: docker/crithit
+    container_name: crithit_minotaur
+    depends_on:
+      - rabbitmq
+    volumes:
+      - "./app:/tools/app"
+      - "./docker/input:/tools/input"
+      - "./docker/output:/tools/output"
+
   dedup:
     build: docker/dedup
     container_name: dedup_minotaur
