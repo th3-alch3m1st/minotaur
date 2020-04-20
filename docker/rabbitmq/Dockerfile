@@ -1,6 +1,6 @@
 FROM rabbitmq:3-management
-RUN apt-get update
-RUN apt-get install -y curl vim python-pip
+RUN apt update
+RUN apt install -y curl vim python-pip
 RUN python -m pip install pika --upgrade
 
 RUN mkdir -p /tools/input

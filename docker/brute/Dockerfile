@@ -22,4 +22,4 @@ RUN mkdir -p /tools/output
 
 ADD ./consumer.py /tools/
 
-ENTRYPOINT ["python", "consumer.py", "brute"]
+ENTRYPOINT ["python", "/tools/consumer.py", "brute"]

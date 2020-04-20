@@ -32,49 +32,27 @@ def do_work(conn, ch, delivery_tag, body):
     thread_id = threading.current_thread().ident
     #LOGGER.info('Thread id: %s Delivery tag: %s Message body: %s', thread_id, delivery_tag, body)
 
-    opt = body.split(" ")
-    domain = opt[1]
+    opt = body.decode().split(" ")
+    url_to_scan = opt[1]
     date = opt[2]
 
-    if opt[0] == 'dedup':
+    # E.x. https://example.com grab example.com
+    domain = url_to_scan.split('://')[1]
 
-        filepath = '/tools/output/' + domain
+    if opt[0] == 'dir-scan':
+
+        filepath = '/tools/output/ffuf/' + domain
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
-	tools = ['amass', 'assetfinder', 'subfinder', 'findomain', 'sonar']
-	subdomains = []
-	all_subdomains = []
-
-    for tool in tools:
-        with open(filepath + '/' + tool + '-' + domain + '.' + date, 'rb') as results:
-            subdomains = results.read().split()
-        all_subdomains.extend(subdomains)
-
-	sorted_subdomains = sorted(set(all_subdomains))
-    for item in sorted_subdomains:
-        if domain not in item:
-            sorted_subdomains.remove(item)
-
-    with open(filepath + "/subdomains-" + domain + "." + date, "wb") as subdomains_file:
-        for subd in sorted_subdomains:
-            subdomains_file.write("%s\n" % subd)
+        dirsearch_process = Popen(['/tools/dirsearch/dirsearch.py', '-w', '/tools/input/wordlist.txt', '-u', url_to_scan, '--random-agent', '-e', 'php,asp,aspx,jsp,js,ini,html,log,txt,sql,zip,conf,cgi,json,jar,dll,xml,db,py,ashx', '-x', '400,429,501,503,520', '-t', '400'], stderr=STDOUT)
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
 
-#    for subdomain in sorted_subdomains:
-#        option = 'alive'
-#	message = option + ' ' + subdomain + ' ' + date
-#	app.send.publish(option, message)
-
-        #option = 'permutations'
-	#message = option + ' ' + domain + ' ' + date
-	#app.send.publish(option, message)
-
-    option = 'alive'
-    message = option + ' ' + domain + ' ' + date
-    app.send.publish(option, message)
+#    option = 'dirsearch'
+#    message = option + ' ' + domain + ' ' + date
+#    app.send.publish(option, message)
 
 
 def on_message(ch, method_frame, _header_frame, body, args):

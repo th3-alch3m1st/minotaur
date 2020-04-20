@@ -54,9 +54,11 @@ def do_work(conn, ch, delivery_tag, body):
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
 
-    option = 'crithit'
-    message = option + ' ' + domain + ' ' + date
-    app.send.publish(option, message)
+    alive = open(filepath + "/alive-" + opt[1] + "." + opt[2], "rb")
+    for endpoint in alive:
+        option = 'dir-scan'
+        message = option + ' ' + endpoint.strip() + ' ' + date
+        app.send.publish(option, message)
 
 
 def on_message(ch, method_frame, _header_frame, body, args):

@@ -52,25 +52,25 @@ services:
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
 
-  resolve:
-    build: docker/resolve
-    container_name: resolve_minotaur
-    depends_on:
-      - rabbitmq
-    volumes:
-      - "./app:/tools/app"
-      - "./docker/input:/tools/input"
-      - "./docker/output:/tools/output"
+#  resolve:
+#    build: docker/resolve
+#    container_name: resolve_minotaur
+#    depends_on:
+#      - rabbitmq
+#    volumes:
+#      - "./app:/tools/app"
+#      - "./docker/input:/tools/input"
+#      - "./docker/output:/tools/output"
 
-  brute:
-    build: docker/brute
-    container_name: brute_minotaur
-    depends_on:
-      - rabbitmq
-    volumes:
-      - "./app:/tools/app"
-      - "./docker/input:/tools/input"
-      - "./docker/output:/tools/output"
+#  brute:
+#    build: docker/brute
+#    container_name: brute_minotaur
+#    depends_on:
+#      - rabbitmq
+#    volumes:
+#      - "./app:/tools/app"
+#      - "./docker/input:/tools/input"
+#      - "./docker/output:/tools/output"
 
 #  resolvers:
 #    build: docker/resolvers
@@ -102,16 +102,27 @@ services:
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
 
-  permutations:
-    build: docker/permutations
-    container_name: permutations_minotaur
+  dir-scan:
+    build: docker/dir-scan
+    container_name: dir-scan_minotaur
     depends_on:
       - rabbitmq
     volumes:
       - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
-    environment:
-      - LC_ALL=C.UTF-8
-      - LANG=C.UTF-8
+      - "./docker/output/dirsearch:/tools/dirsearch/reports"
+
+#  permutations:
+#    build: docker/permutations
+#    container_name: permutations_minotaur
+#    depends_on:
+#      - rabbitmq
+#    volumes:
+#      - "./app:/tools/app"
+#      - "./docker/input:/tools/input"
+#      - "./docker/output:/tools/output"
+#    environment:
+#      - LC_ALL=C.UTF-8
+#      - LANG=C.UTF-8
 
