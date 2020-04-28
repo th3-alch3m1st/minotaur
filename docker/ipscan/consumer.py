@@ -33,26 +33,35 @@ def do_work(conn, ch, delivery_tag, body):
     #LOGGER.info('Thread id: %s Delivery tag: %s Message body: %s', thread_id, delivery_tag, body)
 
     opt = body.decode().split(" ")
-    url_to_scan = opt[1]
+    ip = str(opt[1])
     date = opt[2]
 
-    # E.x. https://example.com grab example.com
-    domain = url_to_scan.split('://')[1]
+    if opt[0] == 'ip-scan':
 
-    if opt[0] == 'dir-scan':
-
-        filepath = '/tools/output/ffuf/' + domain
+        filepath = '/tools/output/ipscan/' + ip
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
-        dirsearch_process = Popen(['/tools/dirsearch/dirsearch.py', '-w', '/tools/input/wordlist.txt', '-u', url_to_scan, '--random-agent', '-e', 'php,asp,aspx,jsp,js,ini,html,log,txt,sql,zip,conf,cgi,json,jar,dll,xml,db,py,ashx', '-x', '400,429,501,503,520', '-t', '400'], stderr=STDOUT)
+        fileoutput = str(filepath + '/scan_' + date)
+        masscan_process = Popen(['/tools/masscan/bin/masscan', '-p1-65535', ip, '--max-rate', '1000', '-oG', fileoutput], stdout=STDOUT, stderr=STDOUT)
+        masscan_process.communicate()[0]
+        masscan_process.wait()
+
+    if opt[0] == 'subnet-scan':
+
+        subnet = ip.split('/')
+
+        filepath = '/tools/output/ipscan/ranges/'
+        if not os.path.exists(filepath):
+            os.makedirs(filepath)
+
+        fileoutput = str(filepath + '/scan_' + subnet[0] + '_' + subnet[1] + '.' + date)
+        masscan_process = Popen(['/tools/masscan/bin/masscan', '-p1-65535', ip,  '--max-rate', '1000', '-oG', fileoutput])
+        masscan_process.communicate()[0]
+        masscan_process.wait()
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
-
-#    option = 'dirsearch'
-#    message = option + ' ' + domain + ' ' + date
-#    app.send.publish(option, message)
 
 
 def on_message(ch, method_frame, _header_frame, body, args):
@@ -78,14 +87,14 @@ def rabbitmqConnection(options):
             durable=True,
             auto_delete=False)
 
-        scan_type = options[0]
-        channel.queue_declare(queue=scan_type, exclusive=False)
-        channel.queue_bind(exchange='test', queue=scan_type, routing_key=scan_type)
-        channel.basic_qos(prefetch_count=1)
+        for scan_type in options:
+            channel.queue_declare(queue=scan_type, exclusive=False)
+            channel.queue_bind(exchange='test', queue=scan_type, routing_key=scan_type)
+            channel.basic_qos(prefetch_count=1)
 
-        threads = []
-        on_message_callback = functools.partial(on_message, args=(connection, threads))
-        channel.basic_consume(scan_type, on_message_callback)
+            threads = []
+            on_message_callback = functools.partial(on_message, args=(connection, threads))
+            channel.basic_consume(scan_type, on_message_callback)
 
         try:
             channel.start_consuming()

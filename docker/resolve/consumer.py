@@ -7,12 +7,13 @@ import threading
 import time
 import pika
 import sys,os
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, STDOUT
+import app.send
 
-LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) -35s %(lineno) -5d: %(message)s')
-LOGGER = logging.getLogger(__name__)
+#LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) -35s %(lineno) -5d: %(message)s')
+#LOGGER = logging.getLogger(__name__)
 
-logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
+#logging.basicConfig(level=logging.DEBUG, format=LOG_FORMAT)
 
 
 def ack_message(ch, delivery_tag):
@@ -29,40 +30,69 @@ def ack_message(ch, delivery_tag):
 
 def do_work(conn, ch, delivery_tag, body):
     thread_id = threading.current_thread().ident
-    LOGGER.info('Thread id: %s Delivery tag: %s Message body: %s', thread_id, delivery_tag, body)
+#    LOGGER.info('Thread id: %s Delivery tag: %s Message body: %s', thread_id, delivery_tag, body)
 
     opt = body.split(" ")
     domain = opt[1]
     date = opt[2]
 
+    '''
     if opt[0] == 'resolve':
-	perms_file = '/tools/output/permutations/permutations-' + domain + '.' + date
-	with open(perms_file + '-resolved', 'wb') as out:
-	    resolver_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S', perms_file], stdout=out)
-            resolver_process.wait()
-            out.flush()
-            os.fsync(out)
+    perms_file = '/tools/output/permutations/permutations-' + domain + '.' + date
+    with open(perms_file + '-resolved', 'wb') as out:
+        resolver_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S', perms_file], stdout=out)
+        resolver_process.wait()
+        out.flush()
+        os.fsync(out)
 
-	if os.stat(perms_file + '-resolved').st_size == 0:
-	    os.remove(perms_file + '-resolved')
+    if os.stat(perms_file + '-resolved').st_size == 0:
+        os.remove(perms_file + '-resolved')
         os.remove(perms_file)
+    '''
 
-        '''
-	subdomains_file = '/tools/output/' + domain + '/subdomains-' + domain + '.' + date
+    if opt[0] == 'wildcard':
+        resolved_subdomains = []
+        resolved_subdomains_file = open('/tools/output/' + domain + '/subdomains-resolved-' + domain + '.' + date, 'wb')
+        with open('/tools/output/' + domain + '/subdomains-' + domain + '.' + date, 'rb') as subdomains_file:
+            for subdomain in subdomains_file:
+                subdomain = subdomain.rstrip('\n')
+                subdomain_array = subdomain.split('.')
+                if len(subdomain_array) > 2:
+                    p1 = Popen(['dig', '@1.1.1.1', 'A,CNAME', subdomain, '+short'], stdout=PIPE)
+                    subdomain_ip_address, err1 = p1.communicate()
+                    for i in range(1, len(subdomain_array)-1):
+                        wildcard = '*.'+'.'.join(map(str, subdomain_array[i:]))
+                        p2 = Popen(['dig', '@1.1.1.1', 'A,CNAME', wildcard, '+short'], stdout=PIPE)
+                        wildcard_ip_address, err2 = p2.communicate()
+                        if subdomain_ip_address != wildcard_ip_address:
+                            #resolved_subdomains.append(subdomain)
+                            resolved_subdomains_file.write("%s\n" % subdomain)
+                            break
+                elif subdomain == domain:
+                    resolved_subdomains_file.write("%s\n" % subdomain)
+
+        resolved_subdomains_file.close()
+
+    '''
+    subdomains_file = '/tools/output/' + domain + '/subdomains-' + domain + '.' + date
         subdomains_resolved_file = '/tools/output/brute-force/' + domain + '-resolved.' + date
-	with open(subdomains_resolved_file, 'wb') as out:
-	    resolver_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S', subdomains_file], stdout=out)
+    with open(subdomains_resolved_file, 'wb') as out:
+        resolver_process = Popen(['/bin/massdns', '-r', '/tools/input/resolvers.txt', '-t', 'A', '-o' , 'S', subdomains_file], stdout=out)
             resolver_process.wait()
             out.flush()
             os.fsync(out)
 
-	if os.stat(subdomains_resolved_file).st_size == 0:
-	    os.remove(subdomains_resolved_file)
+    if os.stat(subdomains_resolved_file).st_size == 0:
+        os.remove(subdomains_resolved_file)
         #os.remove(perms_file)
-        '''
+    '''
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
+
+    option = 'alive'
+    message = option + ' ' + domain + ' ' + date
+    app.send.publish(option, message)
 
 
 def on_message(ch, method_frame, _header_frame, body, args):
@@ -88,14 +118,15 @@ def rabbitmqConnection(options):
             durable=True,
             auto_delete=False)
 
-        for scan_type in options:
-            channel.queue_declare(queue=scan_type, auto_delete=True)
-            channel.queue_bind(exchange='test', queue=scan_type, routing_key=scan_type)
+        scan_type = options[0]
+        channel.queue_declare(queue=scan_type, exclusive=False)
+        channel.queue_bind(exchange='test', queue=scan_type, routing_key=scan_type)
         channel.basic_qos(prefetch_count=1)
 
         threads = []
         on_message_callback = functools.partial(on_message, args=(connection, threads))
         channel.basic_consume(scan_type, on_message_callback)
+
 
         try:
             channel.start_consuming()

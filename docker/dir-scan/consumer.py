@@ -41,10 +41,6 @@ def do_work(conn, ch, delivery_tag, body):
 
     if opt[0] == 'dir-scan':
 
-        filepath = '/tools/output/ffuf/' + domain
-        if not os.path.exists(filepath):
-            os.makedirs(filepath)
-
         dirsearch_process = Popen(['/tools/dirsearch/dirsearch.py', '-w', '/tools/input/wordlist.txt', '-u', url_to_scan, '--random-agent', '-e', 'php,asp,aspx,jsp,js,ini,html,log,txt,sql,zip,conf,cgi,json,jar,dll,xml,db,py,ashx', '-x', '400,429,501,503,520', '-t', '400'], stderr=STDOUT)
 
     cb = functools.partial(ack_message, ch, delivery_tag)

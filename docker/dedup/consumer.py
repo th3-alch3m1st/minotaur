@@ -72,7 +72,7 @@ def do_work(conn, ch, delivery_tag, body):
 	#message = option + ' ' + domain + ' ' + date
 	#app.send.publish(option, message)
 
-    option = 'alive'
+    option = 'wildcard'
     message = option + ' ' + domain + ' ' + date
     app.send.publish(option, message)
 

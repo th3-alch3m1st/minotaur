@@ -42,9 +42,9 @@ def do_work(conn, ch, delivery_tag, body):
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
-        input_file = open(filepath + '/subdomains-' + opt[1] + '.' + opt[2], 'rb')
-        with open(filepath + "/alive-" + opt[1] + "." + opt[2],"wb") as out:
-            httprobe_process = Popen(['/go/bin/httprobe', '-p', 'http:8080', 'https:8443', 'https:9443', 'http:8888', 'https:8080', 'http:8000', 'https:9001', 'https:3000', 'http:3000', 'http:9100', 'https:9100', 'https:9200', 'http:9200', 'http:5000', 'https:5000', 'http:5800', 'http:8008', 'http:8088', 'http:8009', 'http:9080', '-c', '150', '-t', '20000'], stdin=input_file, stdout=out, stderr=STDOUT)
+        input_file = open(filepath + '/subdomains-resolved-' + domain + '.' + date, 'rb')
+        with open(filepath + '/alive-' + domain + '.' + date, 'wb') as out:
+            httprobe_process = Popen(['/go/bin/httprobe', '-p', 'xlarge', '-c', '150', '-t', '15000'], stdin=input_file, stdout=out, stderr=STDOUT)
             httprobe_process.communicate()[0]
             httprobe_process.wait()
             out.flush()
@@ -54,7 +54,7 @@ def do_work(conn, ch, delivery_tag, body):
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
 
-    alive = open(filepath + "/alive-" + opt[1] + "." + opt[2], "rb")
+    alive = open(filepath + '/alive-' + domain + '.' + date, 'rb')
     for endpoint in alive:
         option = 'dir-scan'
         message = option + ' ' + endpoint.strip() + ' ' + date
