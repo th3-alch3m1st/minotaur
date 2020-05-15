@@ -32,48 +32,51 @@ def do_work(conn, ch, delivery_tag, body):
     thread_id = threading.current_thread().ident
     #LOGGER.info('Thread id: %s Delivery tag: %s Message body: %s', thread_id, delivery_tag, body)
 
-    opt = body.split(" ")
-    domain = opt[1]
+    opt = body.decode().split(" ")
+    ip = str(opt[1])
     date = opt[2]
 
-    if opt[0] == 'wildcard':
-        subdomains_file = str('/tools/output/' + domain + '/new_subdomains-' + domain + '.' + date)
-        with open('/tools/output/' + domain + '/subdomains-resolved-' + domain + '.' + date, 'wb') as resolved_subdomains_file:
-            shuffledns_process = Popen(['/go/bin/shuffledns', '-d', domain, '-list', subdomains_file, '-r', '/tools/input/resolvers.txt', '-silent'], stdout=resolved_subdomains_file)
-            shuffledns_process.communicate()[0]
-            shuffledns_process.wait()
+    if opt[0] == 'service-scan':
 
-    '''
-    if opt[0] == 'wildcard':
-        resolved_subdomains = []
-        resolved_subdomains_file = open('/tools/output/' + domain + '/subdomains-resolved-' + domain + '.' + date, 'wb')
-        with open('/tools/output/' + domain + '/subdomains-' + domain + '.' + date, 'rb') as subdomains_file:
-            for subdomain in subdomains_file:
-                subdomain = subdomain.rstrip('\n')
-                subdomain_array = subdomain.split('.')
-                if len(subdomain_array) > 2:
-                    p1 = Popen(['dig', '@1.1.1.1', 'A,CNAME', subdomain, '+short'], stdout=PIPE)
-                    subdomain_ip_address, err1 = p1.communicate()
-                    for i in range(1, len(subdomain_array)-1):
-                        wildcard = '*.'+'.'.join(map(str, subdomain_array[i:]))
-                        p2 = Popen(['dig', '@1.1.1.1', 'A,CNAME', wildcard, '+short'], stdout=PIPE)
-                        wildcard_ip_address, err2 = p2.communicate()
-                        if subdomain_ip_address != wildcard_ip_address:
-                            #resolved_subdomains.append(subdomain)
-                            resolved_subdomains_file.write("%s\n" % subdomain)
-                            break
-                elif subdomain == domain:
-                    resolved_subdomains_file.write("%s\n" % subdomain)
+        if ip.find('/') == -1:
+        # ip format is 8.8.8.8
 
-        resolved_subdomains_file.close()
-    '''
+            filepath = '/tools/output/ipscan/' + ip
+            masscan_result = open(filepath + '/scan_' + date, 'rb')
+            results = masscan_result.readlines()
+
+            ports = '21'
+            for res in results:
+                #Timestamp: 1587900582   Host: 192.84.16.163 ()  Ports: 80/open/tcp//http//
+                if 'Timestamp' in res:
+                    format_res = (res.strip()).split(" ")
+                    host = format_res[2]
+                    port = format_res[4].split('/')[0]
+                    ports += ',' + port
+
+                nmap_process = Popen(['nmap', '-sSV', host, '-p', ports ], stdout=STDOUT, stderr=STDOUT)
+                nmap_process.communicate()[0]
+                nmap_process.wait()
+
+        else:
+        # ip format is 8.8.8.8/24
+
+            filepath = '/tools/output/ipscan/' + ip
+            if not os.path.exists(filepath):
+                os.makedirs(filepath)
+
+            fileoutput = str(filepath + '/scan_' + date)
+            masscan_process = Popen(['/tools/masscan/bin/masscan', '-p1-65535', ip, '--max-rate', '1000', '-oG', fileoutput], stdout=STDOUT, stderr=STDOUT)
+            masscan_process.communicate()[0]
+            masscan_process.wait()
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
 
-    option = 'alive'
-    message = option + ' ' + domain + ' ' + date
-    app.send.publish(option, message)
+    # nmap-scan subnet_24 date / nmap-scan ip date
+    #option = 'nmap-scan'
+    #message = option + ' ' + ip + ' ' + date
+    #app.send.publish(option, message)
 
 
 def on_message(ch, method_frame, _header_frame, body, args):
@@ -107,7 +110,6 @@ def rabbitmqConnection(options):
         threads = []
         on_message_callback = functools.partial(on_message, args=(connection, threads))
         channel.basic_consume(scan_type, on_message_callback)
-
 
         try:
             channel.start_consuming()

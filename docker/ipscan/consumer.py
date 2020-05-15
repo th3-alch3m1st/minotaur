@@ -33,36 +33,39 @@ def do_work(conn, ch, delivery_tag, body):
     #LOGGER.info('Thread id: %s Delivery tag: %s Message body: %s', thread_id, delivery_tag, body)
 
     opt = body.decode().split(" ")
+    # ip can be either 8.8.8.8 or 8.8.8.8/x
     ip = str(opt[1])
     date = opt[2]
 
     if opt[0] == 'ip-scan':
 
-        filepath = '/tools/output/ipscan/' + ip
+        if ip.find('/') == -1:
+            filepath = '/tools/output/ipscan/' + ip
+        else:
+            ip_range = ip.split('/')
+            filepath = '/tools/output/ipscan/' + ip_range[0] + '_' + ip_range[1]
+
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
-        fileoutput = str(filepath + '/scan_' + date)
-        masscan_process = Popen(['/tools/masscan/bin/masscan', '-p1-65535', ip, '--max-rate', '1000', '-oG', fileoutput], stdout=STDOUT, stderr=STDOUT)
-        masscan_process.communicate()[0]
-        masscan_process.wait()
-
-    if opt[0] == 'subnet-scan':
-
-        subnet = ip.split('/')
-
-        filepath = '/tools/output/ipscan/ranges/'
-        if not os.path.exists(filepath):
-            os.makedirs(filepath)
-
-        fileoutput = str(filepath + '/scan_' + subnet[0] + '_' + subnet[1] + '.' + date)
-        masscan_process = Popen(['/tools/masscan/bin/masscan', '-p1-65535', ip,  '--max-rate', '1000', '-oG', fileoutput])
-        masscan_process.communicate()[0]
-        masscan_process.wait()
+        with open('out.txt', 'wb') as out:
+            beefscan_process = Popen(['/tools/beefscan.sh', ip, filepath], stdout=out, stderr=STDOUT)
+            beefscan_process.communicate()[0]
+            beefscan_process.wait()
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
 
+    alive = open(filepath + '/dirsearch_result.txt', 'rb')
+    for endpoint in alive:
+        option = 'dir-scan'
+        message = option + ' ' + endpoint.strip() + ' ' + date
+        app.send.publish(option, message)
+
+    # ip-dir-scan subnet_24 date / ip-dir-scan ip date
+    # option = 'ip-dir-scan'
+    # message = option + ' ' + ip + ' ' + date
+    # app.send.publish(option, message)
 
 def on_message(ch, method_frame, _header_frame, body, args):
     (conn, thrds) = args

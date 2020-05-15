@@ -46,10 +46,10 @@ def do_work(conn, ch, delivery_tag, body):
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
-        with open(filepath + "/assetfinder-" + domain + "." + date, "wb") as out_assetfinder:
+        with open(filepath + '/assetfinder-' + domain + '.' + date, 'wb') as out_assetfinder:
             assetfinder_process = Popen(['/go/bin/assetfinder', domain], stdout=out_assetfinder)
 
-        with open(filepath + "/sonar-" + domain + "." + date, "wb") as out_crobat:
+        with open(filepath + '/sonar-' + domain + '.' + date, 'wb') as out_crobat:
             crobat_process = Popen(['/go/bin/crobat-client', '-s', domain], stdout=out_crobat)
 
     cb = functools.partial(ack_message, ch, delivery_tag)

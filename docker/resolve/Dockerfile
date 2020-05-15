@@ -1,25 +1,21 @@
-FROM ubuntu:16.04
+FROM golang:1.13-alpine3.10 as build
+
+RUN apk add --no-cache --upgrade git openssh-client ca-certificates 
+RUN apk add --update bash python python-dev py-pip
+RUN python -m pip install pika --upgrade
 
 WORKDIR /tools
 
-RUN apt-get update
-RUN apt-get install -y libldns-dev git build-essential
-RUN apt-get install -y python python-dev python-pip
-RUN python -m pip install pika --upgrade
+RUN apk --update --no-cache add ldns 
+RUN apk --no-cache --virtual .deps add ldns-dev build-base
 RUN git clone https://github.com/blechschmidt/massdns.git
 
 RUN cd massdns && make
-RUN mv massdns/bin/massdns /bin/massdns
-
-# Install fresh.py to remove known false positives of results
-RUN apt-get install -y python3-dev python3-pip dnsutils
-RUN git clone https://github.com/teknogeek/fresh.py
-RUN cd fresh.py && pip3 install -r requirements.txt
-RUN cd fresh.py && chmod +x clean.sh
+RUN mv massdns/bin/massdns /usr/bin/massdns
+RUN GO111MODULE=on go get -u -v github.com/projectdiscovery/shuffledns/cmd/shuffledns
 
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
-
 ADD ./consumer.py /tools/
 
 ENTRYPOINT ["python", "/tools/consumer.py", "wildcard"]

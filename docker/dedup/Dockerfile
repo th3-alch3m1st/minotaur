@@ -1,7 +1,11 @@
-FROM python:2.7-alpine
+FROM golang:1.13-alpine3.10 as build
 LABEL maintainer "th3_alchem1st"
 
 WORKDIR /tools
+
+RUN apk add --update bash python python-dev py-pip
+RUN apk add --no-cache --upgrade git openssh-client ca-certificates
+RUN go get -u github.com/tomnomnom/anew
 
 RUN python -m pip install --upgrade pip
 RUN python -m pip install pika --upgrade

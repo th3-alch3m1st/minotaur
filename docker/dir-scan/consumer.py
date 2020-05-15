@@ -37,7 +37,7 @@ def do_work(conn, ch, delivery_tag, body):
     date = opt[2]
 
     # E.x. https://example.com grab example.com
-    domain = url_to_scan.split('://')[1]
+    #domain = url_to_scan.split('://')[1]
 
     if opt[0] == 'dir-scan':
 

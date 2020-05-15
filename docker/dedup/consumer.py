@@ -51,26 +51,27 @@ def do_work(conn, ch, delivery_tag, body):
             subdomains = results.read().split()
         all_subdomains.extend(subdomains)
 
+    # Sort subdomains and remove wrong ones
 	sorted_subdomains = sorted(set(all_subdomains))
+    final_subdomains = []
     for item in sorted_subdomains:
-        if domain not in item:
-            sorted_subdomains.remove(item)
+        if item.find(domain) > 0:
+            final_subdomains.append(item)
 
-    with open(filepath + "/subdomains-" + domain + "." + date, "wb") as subdomains_file:
-        for subd in sorted_subdomains:
+    with open(filepath + '/subdomains-' + domain + '.' + date, 'wb') as subdomains_file:
+        for subd in final_subdomains:
             subdomains_file.write("%s\n" % subd)
+
+    # Run anew
+    subdomains_file = open(filepath + '/subdomains-' + domain + '.' + date, 'r')
+    all_subdomains = str(filepath + '/all_subdomains-' + domain)
+    with open(filepath + '/new_subdomains-' + domain + '.' + date, 'wb') as new_subdomains:
+        anew_process = Popen(['/go/bin/anew', all_subdomains], stdin=subdomains_file, stdout=new_subdomains)
+        anew_process.communicate()[0]
+        anew_process.wait()
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
-
-#    for subdomain in sorted_subdomains:
-#        option = 'alive'
-#	message = option + ' ' + subdomain + ' ' + date
-#	app.send.publish(option, message)
-
-        #option = 'permutations'
-	#message = option + ' ' + domain + ' ' + date
-	#app.send.publish(option, message)
 
     option = 'wildcard'
     message = option + ' ' + domain + ' ' + date
