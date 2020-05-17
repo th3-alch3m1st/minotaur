@@ -44,22 +44,28 @@ def do_work(conn, ch, delivery_tag, body):
 
         input_file = open(filepath + '/subdomains-resolved-' + domain + '.' + date, 'rb')
         with open(filepath + '/alive-' + domain + '.' + date, 'wb') as out:
-            httprobe_process = Popen(['/go/bin/httprobe', '-p', 'xlarge', '-c', '150', '-t', '15000'], stdin=input_file, stdout=out, stderr=STDOUT)
-            httprobe_process.communicate()[0]
-            httprobe_process.wait()
-            out.flush()
-            os.fsync(out)
-            out.close()
+            httprobe_process = Popen(['/go/bin/httprobe', '-p', 'xlarge', '-c', '150', '-t', '15000'], stdin=input_file, stdout=PIPE, stderr=STDOUT)
+            #httprobe_process.communicate()[0]
+            #httprobe_process.wait()
+            while True:
+                endpoint = httprobe_process.stdout.readline().rstrip()
+                if not endpoint:
+                    break
+                option = 'dir-scan'
+                message = option + ' ' + endpoint + ' ' + date
+                app.send.publish(option, message)
+                out.write("%s\n" % endpoint)
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
 
+    '''
     alive = open(filepath + '/alive-' + domain + '.' + date, 'rb')
     for endpoint in alive:
         option = 'dir-scan'
         message = option + ' ' + endpoint.strip() + ' ' + date
         app.send.publish(option, message)
-
+    '''
 
 def on_message(ch, method_frame, _header_frame, body, args):
     (conn, thrds) = args
