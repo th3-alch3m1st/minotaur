@@ -30,17 +30,19 @@ The whole setup is based on workflows:
 1. git clone the repo
 2. Put resolvers.txt in the docker/input/ directory, which you can get through a daily run of dnsvalidator
 3. Put wordlist.txt in the docker/input/ directory, which is the list dirsearch will use
+4. Results are stored in docker/output/ directory
 
-Build using `--compatibility` mode due to the use of replicas for dirsearch.
+- Build using `--compatibility` mode due to the use of replicas for dirsearch.
 
 ```
 docker-compose --compatibility up --build
 ```
 
-Finally, at the moment you can run this using:
+- At the moment you can run this using:
 
 ```
 python app/send.py assetfinder domain.com
+python app/send.py ip-scan x.x.x.x/x <date>
 ```
 
 ### Extra
@@ -52,7 +54,7 @@ python app/send.py assetfinder domain.com
 Useful commands
 
 Use `docker-compose exec rabbitmq bash` to get into the rabbitmq container
+
 Use `rabbitmqctl list_queues
+
 Use `rabbitmqadmin get queue=dir-scan count=100` to list the last 100 entries in the dir-scan queue
-
-
