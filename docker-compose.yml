@@ -95,9 +95,12 @@ services:
 
   dir-scan:
     build: docker/dir-scan
-    container_name: dir-scan_minotaur
+#    container_name: dir-scan_minotaur
     depends_on:
       - rabbitmq
+    deploy:
+      mode: replicated
+      replicas: 3
     volumes:
       - "./app:/tools/app"
       - "./docker/input:/tools/input"
