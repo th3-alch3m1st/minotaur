@@ -55,6 +55,6 @@ Useful commands
 
 Use `docker-compose exec rabbitmq bash` to get into the rabbitmq container
 
-Use `rabbitmqctl list_queues
+Use `rabbitmqctl list_queues` to get a list of all the queues and the number of messages they have
 
 Use `rabbitmqadmin get queue=dir-scan count=100` to list the last 100 entries in the dir-scan queue
