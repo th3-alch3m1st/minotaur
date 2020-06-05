@@ -28,7 +28,7 @@ The whole setup is based on workflows:
 
 ## Environment Variables
 
-- You will need a key to run chaos project, create an .env file in the root path and add a line with your key
+- You will need a key to run chaos project, create an env file in the root path and add a line with your key
 
 ```
 CHAOS_KEY=key
