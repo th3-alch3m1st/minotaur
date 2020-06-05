@@ -40,7 +40,7 @@ def do_work(conn, ch, delivery_tag, body):
     now = datetime.now()
     date = now.strftime("%Y%m%d%H%M%S")
 
-    if opt[0] == 'assetfinder':
+    if opt[0] == 'passive':
 
         filepath = '/tools/output/' + domain
         if not os.path.exists(filepath):
@@ -49,8 +49,8 @@ def do_work(conn, ch, delivery_tag, body):
         with open(filepath + '/assetfinder-' + domain + '.' + date, 'wb') as out_assetfinder:
             assetfinder_process = Popen(['/go/bin/assetfinder', domain], stdout=out_assetfinder)
 
-        with open(filepath + '/sonar-' + domain + '.' + date, 'wb') as out_crobat:
-            crobat_process = Popen(['/go/bin/crobat-client', '-s', domain], stdout=out_crobat)
+        with open(filepath + '/chaos-' + domain + '.' + date, 'wb') as out_chaos:
+            chaos_process = Popen(['/go/bin/chaos', '-d', domain, '-silent'], stdout=out_chaos)
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)

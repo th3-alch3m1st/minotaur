@@ -1,0 +1,5 @@
+docker/output
+docker/input
+
+.env
+sirt.py

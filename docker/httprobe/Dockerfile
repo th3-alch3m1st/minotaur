@@ -4,6 +4,7 @@ RUN apk add --update bash python python-dev py-pip
 RUN python -m pip install pika --upgrade
 
 RUN go get -u github.com/tomnomnom/httprobe
+RUN GO111MODULE=on go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
 
 WORKDIR /tools
 RUN mkdir -p /tools/input
@@ -11,4 +12,4 @@ RUN mkdir -p /tools/output
 
 ADD ./consumer.py /tools/
 
-ENTRYPOINT ["python", "/tools/consumer.py", "alive"]
+ENTRYPOINT ["python", "/tools/consumer.py", "alive", "httpx"]

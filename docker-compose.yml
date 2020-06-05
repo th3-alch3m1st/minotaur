@@ -31,6 +31,8 @@ services:
       - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
+    env_file:
+      - env
 
   findomain:
     build: docker/findomain
@@ -100,7 +102,7 @@ services:
       - rabbitmq
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 5
     volumes:
       - "./app:/tools/app"
       - "./docker/input:/tools/input"

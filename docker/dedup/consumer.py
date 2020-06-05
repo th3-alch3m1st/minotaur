@@ -42,7 +42,7 @@ def do_work(conn, ch, delivery_tag, body):
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
-	tools = ['amass', 'assetfinder', 'subfinder', 'findomain', 'sonar']
+	tools = ['amass', 'assetfinder', 'subfinder', 'findomain', 'chaos']
 	subdomains = []
 	all_subdomains = []
 

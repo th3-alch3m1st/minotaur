@@ -36,17 +36,15 @@ def do_work(conn, ch, delivery_tag, body):
     domain = opt[1]
     date = opt[2]
 
-    if opt[0] == 'alive':
+    filepath = '/tools/output/' + domain
+    if not os.path.exists(filepath):
+        os.makedirs(filepath)
 
-        filepath = '/tools/output/' + domain
-        if not os.path.exists(filepath):
-            os.makedirs(filepath)
+    if opt[0] == 'alive':
 
         input_file = open(filepath + '/subdomains-resolved-' + domain + '.' + date, 'rb')
         with open(filepath + '/alive-' + domain + '.' + date, 'wb') as out:
             httprobe_process = Popen(['/go/bin/httprobe', '-p', 'xlarge', '-c', '150', '-t', '15000'], stdin=input_file, stdout=PIPE, stderr=STDOUT)
-            #httprobe_process.communicate()[0]
-            #httprobe_process.wait()
             while True:
                 endpoint = httprobe_process.stdout.readline().rstrip()
                 if not endpoint:
@@ -56,16 +54,35 @@ def do_work(conn, ch, delivery_tag, body):
                 app.send.publish(option, message)
                 out.write("%s\n" % endpoint)
 
+        option = 'httpx'
+        message = option + ' ' + domain + ' ' + date
+        app.send.publish(option, message)
+
+        option = 'nuclei'
+        message = option + ' ' + domain + ' ' + date
+        app.send.publish(option, message)
+
+    elif opt[0] == 'httpx':
+
+        input_file = str(filepath + '/alive-' + domain + '.' + date)
+        with open(filepath + '/httpx-' + domain + '.' + date, 'wb') as out:
+            httpx_process = Popen(['/go/bin/httpx', '-l', input_file, '-retries', '4', '-title', '-content-length', '-status-code', '-follow-redirects', '-silent'], stdout=out, stderr=STDOUT)
+            httpx_process.communicate()[0]
+            httpx_process.wait()
+
+    elif opt[0] == 'nuclei':
+
+        #./nuclei -l ~/tools/minotaur/docker/output/att.com/alive-att.com.20200519183414 -t 'nuclei-templates/technologies/*.yaml' -c -c 150 -retries 3 -timeout 10 -o att_technologies.txt
+        input_file = str(filepath + '/alive-' + domain + '.' + date)
+        templates = '/tools/input/templates/*.yaml'
+        with open(filepath + '/nuclei-' + domain + '.' + date, 'wb') as out:
+            httpx_process = Popen(['/go/bin/nuclei', '-l', input_file, '-t', templates, '-c', '150', '-retries', '3', '-timeout', '10', '-silent'], stdout=out, stderr=STDOUT)
+            httpx_process.communicate()[0]
+            httpx_process.wait()
+
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
 
-    '''
-    alive = open(filepath + '/alive-' + domain + '.' + date, 'rb')
-    for endpoint in alive:
-        option = 'dir-scan'
-        message = option + ' ' + endpoint.strip() + ' ' + date
-        app.send.publish(option, message)
-    '''
 
 def on_message(ch, method_frame, _header_frame, body, args):
     (conn, thrds) = args
@@ -90,14 +107,14 @@ def rabbitmqConnection(options):
             durable=True,
             auto_delete=False)
 
-        scan_type = options[0]
-        channel.queue_declare(queue=scan_type, exclusive=False)
-        channel.queue_bind(exchange='test', queue=scan_type, routing_key=scan_type)
-        channel.basic_qos(prefetch_count=1)
+        for scan_type in options:
+            channel.queue_declare(queue=scan_type, exclusive=False)
+            channel.queue_bind(exchange='test', queue=scan_type, routing_key=scan_type)
+            channel.basic_qos(prefetch_count=1)
 
-        threads = []
-        on_message_callback = functools.partial(on_message, args=(connection, threads))
-        channel.basic_consume(scan_type, on_message_callback)
+            threads = []
+            on_message_callback = functools.partial(on_message, args=(connection, threads))
+            channel.basic_consume(scan_type, on_message_callback)
 
         try:
             channel.start_consuming()
