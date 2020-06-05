@@ -26,14 +26,6 @@ The whole setup is based on workflows:
 - [ ] Add waybackmachine/commoncrawl results
 - [ ] Change dirsearch to ffuf, better html output
 
-## Environment Variables
-
-- You will need a key to run chaos project, create an env file in the root path and add a line with your key
-
-```
-CHAOS_KEY=key
-```
-
 ## Instructions
 
 1. git clone the repo
@@ -54,9 +46,17 @@ python app/send.py passive domain.com
 python app/send.py ip-scan x.x.x.x/x <date>
 ```
 
+## Environment Variables
+
+- You will need a key to run chaos project, create an env file in the root path and add a line with your key
+
+```
+CHAOS_KEY=key
+```
+
 ### Extra
 
-- Dirsearch runs with 55555licas, you can edit to add more or less.
+- Dirsearch runs with 5 replicas, you can edit to add more or less.
 
 ### Rabbitmq
 
