@@ -4,11 +4,13 @@
 import functools
 import logging
 import threading
-import time
+import tldextract
+from datetime import datetime
 import pika
 import sys,os
 from subprocess import Popen, PIPE, STDOUT
 import app.send
+import app.connection
 
 #LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) -35s %(lineno) -5d: %(message)s')
 #LOGGER = logging.getLogger(__name__)
@@ -34,14 +36,28 @@ def do_work(conn, ch, delivery_tag, body):
 
     opt = body.decode().split(" ")
     url_to_scan = opt[1]
-    date = opt[2]
+    ip_domain = opt[2]
 
-    # E.x. https://example.com grab example.com
-    #domain = url_to_scan.split('://')[1]
+    url = tldextract.extract(url_to_scan)
+    if ip_domain == 'domain':
+        # Case of url being similar to https://www.example.com:8443/
+        subPath = "{}.{}.{}".format(url.subdomain, url.domain, url.suffix)
+        domPath = "{}.{}".format(url.domain, url.suffix)
+    else:
+        # Case of url being similar to https://8.8.8.8:8443/
+        subPath = url.domain
+        domPath = 'ip-scans'
 
     if opt[0] == 'dir-scan':
 
-        dirsearch_process = Popen(['/tools/dirsearch/dirsearch.py', '-w', '/tools/input/wordlist.txt', '-u', url_to_scan, '--random-agent', '-e', 'php,asp,aspx,jsp,js,ini,html,log,txt,sql,zip,conf,cgi,json,jar,dll,xml,db,py,ashx', '-x', '400,429,501,503,520', '-t', '300'], stderr=STDOUT)
+        filepath = '/tools/output/dirsearch/' + domPath + '/' + subPath
+        if not os.path.exists(filepath):
+            os.makedirs(filepath)
+
+        now = datetime.now()
+        filename = now.strftime("%d-%m-%Y_%H-%M-%S")
+
+        dirsearch_process = Popen(['/tools/dirsearch/dirsearch.py', '-w', '/tools/input/wordlist.txt', '-u', url_to_scan, '--random-agent', '-e', 'php,asp,aspx,jsp,js,ini,html,log,txt,sql,zip,conf,cgi,json,jar,dll,xml,db,py,ashx', '-x', '400,429,501,503,520', '-t', '300', '--plain-text-report=' + filepath + '/' + filename], stderr=STDOUT)
         dirsearch_process.communicate()[0]
         dirsearch_process.wait()
 
@@ -63,11 +79,7 @@ def on_message(ch, method_frame, _header_frame, body, args):
 
 def rabbitmqConnection(options):
     while True:
-        credentials = pika.PlainCredentials('guest', 'guest')
-        parameters = pika.ConnectionParameters(
-                'rabbitmq', connection_attempts=5, retry_delay=5, heartbeat=100)
-        connection = pika.BlockingConnection(parameters)
-
+        connection = app.connection.connectionPack()
         channel = connection.channel()
         channel.exchange_declare(
             exchange='test',

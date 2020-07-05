@@ -8,6 +8,8 @@ import time
 import pika
 import sys,os
 from subprocess import Popen, PIPE
+import app.send
+import app.connection
 
 LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) -35s %(lineno) -5d: %(message)s')
 LOGGER = logging.getLogger(__name__)
@@ -67,11 +69,7 @@ def on_message(ch, method_frame, _header_frame, body, args):
 
 def rabbitmqConnection(options):
     while True:
-        credentials = pika.PlainCredentials('guest', 'guest')
-        parameters = pika.ConnectionParameters(
-                'rabbitmq', connection_attempts=5, retry_delay=5, heartbeat=100)
-        connection = pika.BlockingConnection(parameters)
-
+        connection = app.connection.connectionPack()
         channel = connection.channel()
         channel.exchange_declare(
             exchange='test',
@@ -84,8 +82,6 @@ def rabbitmqConnection(options):
             channel.queue_declare(queue=scan_type, auto_delete=True)
             channel.queue_bind(exchange='test', queue=scan_type, routing_key=scan_type)
         channel.basic_qos(prefetch_count=1)
-
-        print('yessssss')
 
         threads = []
         on_message_callback = functools.partial(on_message, args=(connection, threads))

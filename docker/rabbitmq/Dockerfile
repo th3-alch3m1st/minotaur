@@ -5,5 +5,3 @@ RUN python -m pip install pika --upgrade
 
 RUN mkdir -p /tools/input
 RUN mkdir -p /tools/output
-
-EXPOSE 5672 15672

@@ -9,7 +9,8 @@ import sys, logging
 def publish(option, message):
     # Connect to RabbitMQ on the localhost, if different machine use IP/hostname
     # Sometimes the containers throw a connection error - delete the pyc files here and check if this resolves the issue
-    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq', connection_attempts=10, retry_delay=5, heartbeat=300))
+    credentials = pika.PlainCredentials('th3alchem1st','3lWHcDkE4YZ4W1TOr')
+    connection = pika.BlockingConnection(pika.ConnectionParameters('rabbitmq', credentials=credentials,connection_attempts=10, retry_delay=5, heartbeat=300))
     channel = connection.channel()
 
     #'test' exchange to send the message to

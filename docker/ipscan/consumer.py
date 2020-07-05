@@ -9,6 +9,7 @@ import pika
 import sys,os
 from subprocess import Popen, PIPE, STDOUT
 import app.send
+import app.connection
 
 #LOG_FORMAT = ('%(levelname) -10s %(asctime)s %(name) -30s %(funcName) -35s %(lineno) -5d: %(message)s')
 #LOGGER = logging.getLogger(__name__)
@@ -59,7 +60,7 @@ def do_work(conn, ch, delivery_tag, body):
     alive = open(filepath + '/dirsearch_result.txt', 'rb')
     for endpoint in alive:
         option = 'dir-scan'
-        message = option + ' ' + endpoint.strip() + ' ' + date
+        message = option + ' ' + endpoint.strip() + ' ' + 'ip'
         app.send.publish(option, message)
 
     # ip-dir-scan subnet_24 date / ip-dir-scan ip date
@@ -77,11 +78,7 @@ def on_message(ch, method_frame, _header_frame, body, args):
 
 def rabbitmqConnection(options):
     while True:
-        credentials = pika.PlainCredentials('guest', 'guest')
-        parameters = pika.ConnectionParameters(
-                'rabbitmq', connection_attempts=5, retry_delay=5, heartbeat=100)
-        connection = pika.BlockingConnection(parameters)
-
+        connection = app.connection.connectionPack()
         channel = connection.channel()
         channel.exchange_declare(
             exchange='test',

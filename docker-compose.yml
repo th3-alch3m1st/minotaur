@@ -4,6 +4,9 @@ services:
   rabbitmq:
     build: docker/rabbitmq
     container_name: rabbitmq_minotaur
+    environment:
+      RABBITMQ_DEFAULT_USER: "changeme"
+      RABBITMQ_DEFAULT_PASS: "changeme"
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -74,7 +77,6 @@ services:
 #      - "./docker/input:/tools/input"
 #      - "./docker/output:/tools/output"
 
-
   httprobe:
     build: docker/httprobe
     container_name: httprobe_minotaur
@@ -97,7 +99,6 @@ services:
 
   dir-scan:
     build: docker/dir-scan
-#    container_name: dir-scan_minotaur
     depends_on:
       - rabbitmq
     deploy:
@@ -107,7 +108,6 @@ services:
       - "./app:/tools/app"
       - "./docker/input:/tools/input"
       - "./docker/output:/tools/output"
-      - "./docker/output/dirsearch:/tools/dirsearch/reports"
 
   ipscan:
     build: docker/ipscan
@@ -121,4 +121,3 @@ services:
 #    environment:
 #      - LC_ALL=C.UTF-8
 #      - LANG=C.UTF-8
-

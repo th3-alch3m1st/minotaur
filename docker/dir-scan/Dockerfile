@@ -3,6 +3,7 @@ RUN apt-get update -y
 RUN apt-get install python3-pip -y
 RUN apt-get install -y python python-dev python-pip
 RUN python -m pip install pika --upgrade
+RUN python -m pip install tldextract
 
 WORKDIR /tools
 RUN mkdir input

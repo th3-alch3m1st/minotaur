@@ -1,5 +1,5 @@
 docker/output
 docker/input
 
-.env
+env
 sirt.py

@@ -1,2 +1,467 @@
-Error #486: Your port specifications are illegal.  Example of proper form: "-100,200-1024,T:3000-4000,U:60000-"
-QUITTING!
+# Nmap 7.80 scan initiated Wed Jun 24 22:41:09 2020 as: nmap -sSV -T4 -A -p 443,80 -iL hosts.txt --open -o here/nmap_result.txt
+Nmap scan report for eventalerts.geico.com (205.143.201.169)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE    VERSION
+443/tcp open  ssl/https?
+| ssl-cert: Subject: commonName=eventalerts.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:eventalerts.geico.com
+| Not valid before: 2020-04-21T07:32:25
+|_Not valid after:  2022-04-21T13:32:25
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X (94%), Apple OS X 10.8.X|10.9.X (94%), Apple Mac OS X 10.7.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:mac_os_x:10.8 cpe:/o:apple:mac_os_x:10.9 cpe:/o:apple:mac_os_x:10.7
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 20 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-19 are the same as for 205.143.201.30
+20  135.96 ms eventalerts.geico.com (205.143.201.169)
+
+Nmap scan report for geico-205-143-201-175 (205.143.201.175)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE  VERSION
+443/tcp open  ssl/http Microsoft IIS httpd 10.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: EastWestChooser
+| ssl-cert: Subject: commonName=azewch-np.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:azewch-np.geico.com
+| Not valid before: 2018-07-12T05:13:48
+|_Not valid after:  2020-07-13T11:13:48
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X (94%), Apple OS X 10.8.X|10.9.X (94%), Apple Mac OS X 10.7.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:mac_os_x:10.8 cpe:/o:apple:mac_os_x:10.9 cpe:/o:apple:mac_os_x:10.7
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 20 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-19 are the same as for 205.143.201.37
+20  130.54 ms geico-205-143-201-175 (205.143.201.175)
+
+Nmap scan report for geico-205-143-201-178 (205.143.201.178)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE  VERSION
+443/tcp open  ssl/http Microsoft IIS httpd 10.0
+| ssl-cert: Subject: commonName=azurestatus-np.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:azurestatus-np.geico.com
+| Not valid before: 2019-01-23T13:22:00
+|_Not valid after:  2021-01-22T19:22:00
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X (94%), Apple OS X 10.8.X|10.9.X (94%), Apple Mac OS X 10.7.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:mac_os_x:10.8 cpe:/o:apple:mac_os_x:10.9 cpe:/o:apple:mac_os_x:10.7
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-17 are the same as for 205.143.201.30
+18  131.68 ms 206.16.237.146
+19  133.39 ms geico-205-143-201-178 (205.143.201.178)
+
+Nmap scan report for geico-205-143-201-193 (205.143.201.193)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE  VERSION
+443/tcp open  ssl/http Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+| http-robots.txt: 1 disallowed entry 
+|_/
+|_http-server-header: <empty>
+| ssl-cert: Subject: commonName=localhost.localdomain/organizationName=MyCompany/stateOrProvinceName=WA/countryName=US
+| Not valid before: 2014-03-07T19:13:34
+|_Not valid after:  2024-03-04T19:13:34
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|7.X|8.X|9.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:7.1.1 cpe:/o:apple:iphone_os:8.2 cpe:/o:apple:iphone_os:9
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%), Apple OS X 10.8 (Mountain Lion) (Darwin 12.4.0) (92%), Apple OS X 10.9 (Mavericks) (Darwin 13.0.0 - 13.2.0) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 20 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-19 are the same as for 205.143.201.37
+20  131.64 ms geico-205-143-201-193 (205.143.201.193)
+
+Nmap scan report for divarouting-fn1.geico.com (205.143.201.196)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE    VERSION
+443/tcp open  ssl/https?
+| ssl-cert: Subject: commonName=divarouting-pt1.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:divarouting-pt1.geico.com
+| Not valid before: 2017-01-03T11:38:41
+|_Not valid after:  2019-01-03T17:38:41
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|7.X|8.X|9.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:7.1.1 cpe:/o:apple:iphone_os:8.2 cpe:/o:apple:iphone_os:9
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%), Apple OS X 10.8 (Mountain Lion) (Darwin 12.4.0) (92%), Apple OS X 10.9 (Mavericks) (Darwin 13.0.0 - 13.2.0) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-18 are the same as for 205.143.201.178
+19  132.67 ms divarouting-fn1.geico.com (205.143.201.196)
+
+Nmap scan report for geico-205-143-201-204 (205.143.201.204)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE    VERSION
+443/tcp open  ssl/https?
+| ssl-cert: Subject: commonName=partnersdr.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:partnersdr.geico.com
+| Not valid before: 2019-11-01T14:37:00
+|_Not valid after:  2021-11-01T20:37:00
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|7.X|8.X|9.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:7.1.1 cpe:/o:apple:iphone_os:8.2 cpe:/o:apple:iphone_os:9
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%), Apple OS X 10.9 (Mavericks) (Darwin 13.0.0 - 13.2.0) (92%), Netgear WNR834Bv2 WAP (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-18 are the same as for 205.143.201.178
+19  129.45 ms geico-205-143-201-204 (205.143.201.204)
+
+Nmap scan report for geico-205-143-201-205 (205.143.201.205)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE    VERSION
+443/tcp open  ssl/https?
+| ssl-cert: Subject: commonName=CLAIMSINT.GEICO.COM/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:CLAIMSINT.GEICO.COM
+| Not valid before: 2019-01-31T07:27:16
+|_Not valid after:  2021-02-16T13:27:16
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X (94%), Apple OS X 10.8.X|10.9.X (94%), Apple Mac OS X 10.7.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:mac_os_x:10.8 cpe:/o:apple:mac_os_x:10.9 cpe:/o:apple:mac_os_x:10.7
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-18 are the same as for 205.143.201.30
+19  129.93 ms geico-205-143-201-205 (205.143.201.205)
+
+Nmap scan report for harness-user3.geico.com (205.143.201.216)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE    VERSION
+443/tcp open  ssl/https?
+| ssl-cert: Subject: commonName=harness-user3.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:harness-user3.geico.com
+| Not valid before: 2017-01-26T05:54:03
+|_Not valid after:  2019-02-20T11:54:03
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X (94%), Apple OS X 10.8.X|10.9.X (94%), Apple Mac OS X 10.7.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:mac_os_x:10.8 cpe:/o:apple:mac_os_x:10.9 cpe:/o:apple:mac_os_x:10.7
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 20 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-19 are the same as for 205.143.201.30
+20  131.19 ms harness-user3.geico.com (205.143.201.216)
+
+Nmap scan report for geico-205-143-201-235 (205.143.201.235)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE  VERSION
+443/tcp open  ssl/http Microsoft IIS httpd 10.0
+|_http-server-header: Microsoft-IIS/10.0
+|_http-title: Site doesn't have a title.
+| ssl-cert: Subject: commonName=salesb2b-test.geico.com/organizationName=Government Employees Insurance Company/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:salesb2b-test.geico.com
+| Not valid before: 2019-02-25T08:39:07
+|_Not valid after:  2021-02-24T14:39:07
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X (94%), Apple OS X 10.8.X|10.9.X (94%), Apple Mac OS X 10.7.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:mac_os_x:10.8 cpe:/o:apple:mac_os_x:10.9 cpe:/o:apple:mac_os_x:10.7
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-15 are the same as for 205.143.201.30
+16  133.78 ms 32.130.249.198
+17  134.24 ms 32.130.249.205
+18  136.37 ms 32.130.249.205
+19  136.25 ms geico-205-143-201-235 (205.143.201.235)
+
+Nmap scan report for anbcrouter-dev1.geico.com (205.143.201.242)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE    VERSION
+443/tcp open  ssl/https?
+| ssl-cert: Subject: commonName=apimanagement-poc.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:apimanagement-poc.geico.com
+| Not valid before: 2019-05-16T06:46:34
+|_Not valid after:  2021-05-17T12:46:34
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X (94%), Apple OS X 10.8.X|10.9.X (94%), Apple Mac OS X 10.7.X (94%), AirSpan embedded (92%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5 cpe:/o:apple:iphone_os:6 cpe:/o:apple:mac_os_x:10.8 cpe:/o:apple:mac_os_x:10.9 cpe:/o:apple:mac_os_x:10.7
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), AirSpan ProST WiMAX access point (92%), Apple iOS 5.1.1 (92%), Apple iOS 6 (92%), Apple iOS 7.1.1 (92%), Apple iOS 8.2 (Darwin 14.0.0) (92%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-18 are the same as for 205.143.201.178
+19  132.31 ms anbcrouter-dev1.geico.com (205.143.201.242)
+
+Nmap scan report for propertysales-dr.geico.com (205.143.201.30)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE    VERSION
+443/tcp open  ssl/https?
+| ssl-cert: Subject: commonName=propertysales-dr.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:propertysales-dr.geico.com
+| Not valid before: 2019-10-18T11:33:42
+|_Not valid after:  2021-10-18T17:33:42
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|8.X (94%), Apple OS X 10.8.X|10.9.X (94%), Netgear embedded (94%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5.1.1 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:8.2 cpe:/o:apple:mac_os_x:10.8 cpe:/h:netgear:wnr834bv2 cpe:/o:apple:mac_os_x:10.9
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple iOS 8.2 (Darwin 14.0.0) (94%), Apple OS X 10.8 (Mountain Lion) (Darwin 12.4.0) (94%), Netgear WNR834Bv2 WAP (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), Microsoft Windows Server 2008 R2 (94%), Netasq U70 firewall (94%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 20 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+1   ...
+2   1.34 ms   83.212.96.2
+3   1.47 ms   eier-ypedcfs1-AE.backbone.grnet.gr (62.217.100.100)
+4   1.69 ms   grnet-ias-geant-gw.mx2.ath.gr.geant.net (83.97.88.69)
+5   29.36 ms  ae0.mx1.vie.at.geant.net (62.40.98.147)
+6   29.89 ms  be5582.ccr52.vie01.atlas.cogentco.com (149.6.175.249)
+7   35.09 ms  be3462.ccr22.muc03.atlas.cogentco.com (154.54.59.182)
+8   36.78 ms  be3462.ccr22.muc03.atlas.cogentco.com (154.54.59.182)
+9   41.83 ms  be2960.ccr42.fra03.atlas.cogentco.com (154.54.36.253)
+10  50.04 ms  be2800.ccr42.par01.atlas.cogentco.com (154.54.58.238)
+11  121.40 ms be3496.ccr31.jfk10.atlas.cogentco.com (154.54.0.142)
+12  127.36 ms att.jfk10.atlas.cogentco.com (154.54.10.98)
+13  128.68 ms att.jfk10.atlas.cogentco.com (154.54.10.98)
+14  132.94 ms wswdc22crs.ip.att.net (12.122.28.42)
+15  133.74 ms 12.122.116.89
+16  134.18 ms 32.130.249.200
+17  134.95 ms 32.130.249.200
+18  133.59 ms 32.130.249.223
+19  133.15 ms 206.16.237.146
+20  132.68 ms propertysales-dr.geico.com (205.143.201.30)
+
+Nmap scan report for 205.143.201.37
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE  VERSION
+443/tcp open  ssl/http Microsoft IIS httpd 8.0
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/8.0
+|_http-title: 403 - Forbidden: Access is denied.
+| ssl-cert: Subject: commonName=serviceui-dr.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:serviceui-dr.geico.com
+| Not valid before: 2019-10-09T06:43:45
+|_Not valid after:  2021-10-08T12:43:45
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|8.X (94%), Apple OS X 10.8.X|10.9.X (94%), Netgear embedded (94%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5.1.1 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:8.2 cpe:/o:apple:mac_os_x:10.8 cpe:/h:netgear:wnr834bv2 cpe:/o:apple:mac_os_x:10.9
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple iOS 8.2 (Darwin 14.0.0) (94%), Apple OS X 10.8 (Mountain Lion) (Darwin 12.4.0) (94%), Netgear WNR834Bv2 WAP (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), Microsoft Windows Server 2008 R2 (94%), Netasq U70 firewall (94%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 20 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-17 are the same as for 205.143.201.30
+18  130.09 ms 206.16.237.150
+19  131.86 ms 206.16.237.150
+20  130.46 ms 205.143.201.37
+
+Nmap scan report for geico-205-143-201-53 (205.143.201.53)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE  VERSION
+443/tcp open  ssl/http Microsoft IIS httpd 8.5
+|_http-server-header: Apache/2.4.33 (Win32) OpenSSL/1.0.2o PHP/7.1.17
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+| ssl-cert: Subject: commonName=eventalertspd.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:eventalertspd.geico.com
+| Not valid before: 2020-04-24T11:31:38
+|_Not valid after:  2022-04-25T17:31:38
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|8.X (94%), Apple OS X 10.8.X|10.9.X (94%), Netgear embedded (94%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5.1.1 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:8.2 cpe:/o:apple:mac_os_x:10.8 cpe:/h:netgear:wnr834bv2 cpe:/o:apple:mac_os_x:10.9
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple iOS 8.2 (Darwin 14.0.0) (94%), Apple OS X 10.8 (Mountain Lion) (Darwin 12.4.0) (94%), Netgear WNR834Bv2 WAP (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), Microsoft Windows Server 2008 R2 (94%), Netasq U70 firewall (94%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-18 are the same as for 205.143.201.37
+19  134.62 ms geico-205-143-201-53 (205.143.201.53)
+
+Nmap scan report for divarouting-trng1.geico.com (205.143.201.58)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE    VERSION
+443/tcp open  ssl/https?
+| ssl-cert: Subject: commonName=divarouting2.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:divarouting2.geico.com
+| Not valid before: 2016-12-14T12:45:56
+|_Not valid after:  2018-12-14T18:45:56
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|8.X (94%), Apple OS X 10.8.X|10.9.X (94%), Netgear embedded (94%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5.1.1 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:8.2 cpe:/o:apple:mac_os_x:10.8 cpe:/h:netgear:wnr834bv2 cpe:/o:apple:mac_os_x:10.9
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple iOS 8.2 (Darwin 14.0.0) (94%), Apple OS X 10.8 (Mountain Lion) (Darwin 12.4.0) (94%), Netgear WNR834Bv2 WAP (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), Microsoft Windows Server 2008 R2 (94%), Netasq U70 firewall (94%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-18 are the same as for 205.143.201.30
+19  131.14 ms divarouting-trng1.geico.com (205.143.201.58)
+
+Nmap scan report for geico-205-143-201-69 (205.143.201.69)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE    VERSION
+443/tcp open  tcpwrapped
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|8.X (94%), Apple OS X 10.8.X|10.9.X (94%), Netgear embedded (94%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5.1.1 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:8.2 cpe:/o:apple:mac_os_x:10.8 cpe:/h:netgear:wnr834bv2 cpe:/o:apple:mac_os_x:10.9
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple iOS 8.2 (Darwin 14.0.0) (94%), Apple OS X 10.8 (Mountain Lion) (Darwin 12.4.0) (94%), Netgear WNR834Bv2 WAP (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), Microsoft Windows Server 2008 R2 (94%), AirSpan ProST WiMAX access point (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-18 are the same as for 205.143.201.37
+19  132.34 ms geico-205-143-201-69 (205.143.201.69)
+
+Nmap scan report for geico-205-143-201-72 (205.143.201.72)
+Host is up (0.13s latency).
+Not shown: 1 filtered port
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE   VERSION
+443/tcp open  ssl/https
+| fingerprint-strings: 
+|   FourOhFourRequest: 
+|     HTTP/1.0 404 Not Found
+|     Content-Type: text/plain
+|     Date: Wed, 24 Jun 2020 19:41:32 GMT
+|     Connection: close
+|     listener for endpoint: /nice%20ports%2C/Tri%6Eity.txt%2ebak
+|   GetRequest, HTTPOptions: 
+|     HTTP/1.0 404 Not Found
+|     Content-Type: text/plain
+|     Date: Wed, 24 Jun 2020 19:41:31 GMT
+|     Connection: close
+|     listener for endpoint: /
+|   RTSPRequest: 
+|     HTTP/1.1 505 HTTP Version Not Supported
+|     Date: Wed, 24 Jun 2020 19:41:43 GMT
+|     Connection: close
+|     Content-Length: 0
+|   SIPOptions: 
+|     HTTP/1.1 505 HTTP Version Not Supported
+|     Date: Wed, 24 Jun 2020 19:42:55 GMT
+|     Connection: close
+|_    Content-Length: 0
+|_http-title: Site doesn't have a title (text/plain).
+| ssl-cert: Subject: commonName=apimanager.geico.com/organizationName=GEICO/stateOrProvinceName=Maryland/countryName=US
+| Subject Alternative Name: DNS:apimanager.geico.com
+| Not valid before: 2019-11-21T13:06:39
+|_Not valid after:  2021-11-22T19:06:39
+|_ssl-date: TLS randomness does not represent time
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port443-TCP:V=7.80%T=SSL%I=7%D=6/24%Time=5EF3AC6B%P=x86_64-unknown-linu
+SF:x-gnu%r(GetRequest,87,"HTTP/1\.0\x20404\x20Not\x20Found\r\nContent-Type
+SF::\x20text/plain\r\nDate:\x20Wed,\x2024\x20Jun\x202020\x2019:41:31\x20GM
+SF:T\r\nConnection:\x20close\r\n\r\nNo\x20listener\x20for\x20endpoint:\x20
+SF:/")%r(HTTPOptions,87,"HTTP/1\.0\x20404\x20Not\x20Found\r\nContent-Type:
+SF:\x20text/plain\r\nDate:\x20Wed,\x2024\x20Jun\x202020\x2019:41:31\x20GMT
+SF:\r\nConnection:\x20close\r\n\r\nNo\x20listener\x20for\x20endpoint:\x20/
+SF:")%r(FourOhFourRequest,AA,"HTTP/1\.0\x20404\x20Not\x20Found\r\nContent-
+SF:Type:\x20text/plain\r\nDate:\x20Wed,\x2024\x20Jun\x202020\x2019:41:32\x
+SF:20GMT\r\nConnection:\x20close\r\n\r\nNo\x20listener\x20for\x20endpoint:
+SF:\x20/nice%20ports%2C/Tri%6Eity\.txt%2ebak")%r(RTSPRequest,76,"HTTP/1\.1
+SF:\x20505\x20HTTP\x20Version\x20Not\x20Supported\r\nDate:\x20Wed,\x2024\x
+SF:20Jun\x202020\x2019:41:43\x20GMT\r\nConnection:\x20close\r\nContent-Len
+SF:gth:\x200\r\n\r\n")%r(SIPOptions,76,"HTTP/1\.1\x20505\x20HTTP\x20Versio
+SF:n\x20Not\x20Supported\r\nDate:\x20Wed,\x2024\x20Jun\x202020\x2019:42:55
+SF:\x20GMT\r\nConnection:\x20close\r\nContent-Length:\x200\r\n\r\n");
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|8.X (94%), Apple OS X 10.8.X|10.9.X (94%), Netgear embedded (94%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5.1.1 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:8.2 cpe:/o:apple:mac_os_x:10.8 cpe:/h:netgear:wnr834bv2 cpe:/o:apple:mac_os_x:10.9
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 (94%), Apple iOS 5.1.1 - 6.1 (94%), Apple iOS 8.2 (Darwin 14.0.0) (94%), Apple OS X 10.8 (Mountain Lion) (Darwin 12.4.0) (94%), Netgear WNR834Bv2 WAP (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Apple Mac OS X 10.7.0 - 10.7.3 (Lion) (Darwin 11.0.0 - 11.3.0) (94%), Microsoft Windows Server 2008 R2 (94%), AirSpan ProST WiMAX access point (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 19 hops
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+-   Hops 1-18 are the same as for 205.143.201.37
+19  130.12 ms geico-205-143-201-72 (205.143.201.72)
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Jun 24 22:46:32 2020 -- 23 IP addresses (16 hosts up) scanned in 324.31 seconds
