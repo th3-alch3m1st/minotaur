@@ -43,7 +43,7 @@ def do_work(conn, ch, delivery_tag, body):
         # Case of url being similar to https://www.example.com:8443/
         subPath = "{}.{}.{}".format(url.subdomain, url.domain, url.suffix)
         domPath = "{}.{}".format(url.domain, url.suffix)
-    else:
+    elif ip_domain == 'ip':
         # Case of url being similar to https://8.8.8.8:8443/
         subPath = url.domain
         domPath = 'ip-scans'
@@ -57,9 +57,16 @@ def do_work(conn, ch, delivery_tag, body):
         now = datetime.now()
         filename = now.strftime("%d-%m-%Y_%H-%M-%S")
 
+        #~/tools/ffuf -w ~/lists/0.the-one-to-use.txt -u https://prod-8x8-latency.8x8.vc/FUZZ -H 'Host: localhost' -ac -t 600
+        ffufFile = 'ffuf_' + filename + '.html'
+        ffuf_process = Popen(['/go/bin/ffuf', '-w', '/tools/input/vhosts-wordlist.txt', '-u', url_to_scan + '/FUZZ', '-H', 'Host: localhost', '-ac', '-t', '300', '-o', filepath + '/' + ffufFile, '-of' , 'html'], stderr=STDOUT)
+        ffuf_process.communicate()[0]
+        ffuf_process.wait()
+
         dirsearch_process = Popen(['/tools/dirsearch/dirsearch.py', '-w', '/tools/input/wordlist.txt', '-u', url_to_scan, '--random-agent', '-e', 'php,asp,aspx,jsp,js,ini,html,log,txt,sql,zip,conf,cgi,json,jar,dll,xml,db,py,ashx', '-x', '400,429,501,503,520', '-t', '300', '--plain-text-report=' + filepath + '/' + filename], stderr=STDOUT)
         dirsearch_process.communicate()[0]
         dirsearch_process.wait()
+
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)

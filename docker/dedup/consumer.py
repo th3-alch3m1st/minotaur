@@ -52,6 +52,13 @@ def do_work(conn, ch, delivery_tag, body):
             subdomains = results.read().split()
         all_subdomains.extend(subdomains)
 
+    # Grab Rapid7 Sonar data
+    sonarFilepath = '/tools/input/sonar/' + domain
+    for file in os.listdir(sonarFilepath):
+        with open(sonarFilepath + '/' + file, 'rb') as results:
+            subdomains = results.read().split()
+        all_subdomains.extend(subdomains)
+
     # Sort subdomains and remove wrong ones
 	sorted_subdomains = sorted(set(all_subdomains))
     final_subdomains = []

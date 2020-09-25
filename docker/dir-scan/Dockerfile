@@ -1,9 +1,10 @@
-FROM python:3
-RUN apt-get update -y
-RUN apt-get install python3-pip -y
-RUN apt-get install -y python python-dev python-pip
+FROM golang:1.13-alpine3.10 as build
+RUN apk add --no-cache --upgrade git openssh-client ca-certificates
+RUN apk add --update bash python python3 py3-pip python-dev py-pip
 RUN python -m pip install pika --upgrade
 RUN python -m pip install tldextract
+
+RUN go get -u github.com/ffuf/ffuf
 
 WORKDIR /tools
 RUN mkdir input

@@ -73,13 +73,19 @@ def do_work(conn, ch, delivery_tag, body):
 
     elif opt[0] == 'nuclei':
 
-        #./nuclei -l ~/tools/minotaur/docker/output/att.com/alive-att.com.20200519183414 -t 'nuclei-templates/technologies/*.yaml' -c -c 150 -retries 3 -timeout 10 -o att_technologies.txt
         input_file = str(filepath + '/alive-' + domain + '.' + date)
-        templates = '/tools/input/templates/*.yaml'
-        with open(filepath + '/nuclei-' + domain + '.' + date, 'wb') as out:
-            httpx_process = Popen(['/go/bin/nuclei', '-l', input_file, '-t', templates, '-c', '150', '-retries', '3', '-timeout', '10', '-silent'], stdout=out, stderr=STDOUT)
-            httpx_process.communicate()[0]
-            httpx_process.wait()
+        filepath = '/tools/output/' + domain + '/nuclei'
+        if not os.path.exists(filepath):
+            os.makedirs(filepath)
+
+        #./nuclei -l ~/tools/minotaur/docker/output/att.com/alive-att.com.20200519183414 -t 'nuclei-templates/technologies/*.yaml' -c 150 -retries 3 -timeout 10 -o att_technologies.txt
+        templates = ['cves', 'files', 'panels', 'security-misconfiguration', 'subdomain-takeover', 'technologies', 'tokens', 'vulnerabilities', 'workflows']
+        for template in templates:
+            template_file = '/tools/input/nuclei-templates/' + template + '/'
+            with open(filepath + '/nuclei_' + template + '_' + domain + '.' + date, 'wb') as out:
+                nuclei_process = Popen(['/go/bin/nuclei', '-l', input_file, '-t', template_file, '-c', '151', '-retries', '3', '-timeout', '10', '-silent'], stdout=out, stderr=STDOUT)
+                nuclei_process.communicate()[0]
+                nuclei_process.wait()
 
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)

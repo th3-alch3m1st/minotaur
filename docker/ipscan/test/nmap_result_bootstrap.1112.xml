@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="nmap-bootstrap.xsl" type="text/xsl"?>
+<!-- Nmap 7.80 scan initiated Sun Aug 30 11:42:57 2020 as: nmap -sSV -T4 -A -p 443,80 -&#45;open -o test/nmap_result.1112.txt -&#45;stylesheet nmap-bootstrap.xsl -oA test/nmap_result_bootstrap.1112 162.92.177.7 -->
+<nmaprun scanner="nmap" args="nmap -sSV -T4 -A -p 443,80 -&#45;open -o test/nmap_result.1112.txt -&#45;stylesheet nmap-bootstrap.xsl -oA test/nmap_result_bootstrap.1112 162.92.177.7" start="1598776977" startstr="Sun Aug 30 11:42:57 2020" version="7.80" xmloutputversion="1.04">
+<scaninfo type="syn" protocol="tcp" numservices="2" services="80,443"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1598776978" endtime="1598777011"><status state="up" reason="syn-ack" reason_ttl="238"/>
+<address addr="162.92.177.7" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="tcp" portid="80"><state state="open" reason="syn-ack" reason_ttl="238"/><service name="http-proxy" product="F5 BIG-IP load balancer http proxy" devicetype="load balancer" method="probed" conf="10"/><script id="http-open-proxy" output="Proxy might be redirecting requests"/><script id="http-server-header" output="BigIP"><elem>BigIP</elem>
+</script><script id="http-title" output="Did not follow redirect to https://162.92.177.7/"><elem key="redirect_url">https://162.92.177.7/</elem>
+</script><script id="https-redirect" output="ERROR: Script execution failed (use -d to debug)"/></port>
+<port protocol="tcp" portid="443"><state state="open" reason="syn-ack" reason_ttl="238"/><service name="http-proxy" product="F5 BIG-IP load balancer http proxy" devicetype="load balancer" tunnel="ssl" method="probed" conf="10"/><script id="http-server-header" output="BigIP"><elem>BigIP</elem>
+</script><script id="ssl-cert" output="Subject: commonName=technologyservices.aa.com/organizationName=American Airlines Inc/stateOrProvinceName=Texas/countryName=US&#xa;Subject Alternative Name: DNS:technologyservices.aa.com, DNS:www.technologyservices.aa.com&#xa;Not valid before: 2019-10-03T17:59:34&#xa;Not valid after:  2021-10-03T18:29:33"><table key="subject">
+<elem key="stateOrProvinceName">Texas</elem>
+<elem key="countryName">US</elem>
+<elem key="localityName">Fort Worth</elem>
+<elem key="organizationName">American Airlines Inc</elem>
+<elem key="commonName">technologyservices.aa.com</elem>
+</table>
+<table key="issuer">
+<elem key="countryName">US</elem>
+<elem key="organizationalUnitName">(c) 2012 Entrust, Inc. - for authorized use only</elem>
+<elem key="organizationName">Entrust, Inc.</elem>
+<elem key="commonName">Entrust Certification Authority - L1K</elem>
+</table>
+<table key="pubkey">
+<elem key="bits">2048</elem>
+<elem key="modulus">BIGNUM: 0x39e9968</elem>
+<elem key="exponent">BIGNUM: 0x39e9928</elem>
+<elem key="type">rsa</elem>
+</table>
+<table key="extensions">
+<table>
+<elem key="value">DNS:technologyservices.aa.com, DNS:www.technologyservices.aa.com</elem>
+<elem key="name">X509v3 Subject Alternative Name</elem>
+</table>
+<table>
+<elem key="value">Signed Certificate Timestamp:&#xa;    Version   : v1(0)&#xa;    Log ID    : 55:81:D4:C2:16:90:36:01:4A:EA:0B:9B:57:3C:53:F0:&#xa;                C0:E4:38:78:70:25:08:17:2F:A3:AA:1D:07:13:D3:0C&#xa;    Timestamp : Oct  3 18:29:35.913 2019 GMT&#xa;    Extensions: none&#xa;    Signature : ecdsa-with-SHA256&#xa;                30:46:02:21:00:E5:18:07:C2:E9:60:46:A5:D3:AD:AA:&#xa;                2A:D0:95:5F:6C:F8:0E:1B:10:1F:13:EA:7F:8F:88:16:&#xa;                8F:B5:AD:E9:D2:02:21:00:84:96:56:F1:A2:3B:F8:4C:&#xa;                7F:EC:5E:84:FD:C5:44:6A:F6:19:A2:A3:FF:44:43:B3:&#xa;                EC:3E:DE:47:77:FF:04:BD&#xa;Signed Certificate Timestamp:&#xa;    Version   : v1(0)&#xa;    Log ID    : 44:94:65:2E:B0:EE:CE:AF:C4:40:07:D8:A8:FE:28:C0:&#xa;                DA:E6:82:BE:D8:CB:31:B5:3F:D3:33:96:B5:B6:81:A8&#xa;    Timestamp : Oct  3 18:29:35.888 2019 GMT&#xa;    Extensions: none&#xa;    Signature : ecdsa-with-SHA256&#xa;                30:45:02:21:00:EB:31:FA:E1:0D:DD:AC:18:46:1D:EC:&#xa;                6A:02:AA:06:AC:EA:27:B1:F7:0C:66:15:F8:3F:18:F9:&#xa;                6E:D0:9A:DC:8A:02:20:55:F7:4E:B7:6B:0A:DD:D9:C5:&#xa;                FC:A6:42:0D:D1:9D:24:6F:77:B3:D9:77:D4:83:B2:DF:&#xa;                1B:90:93:A2:C3:E6:AF&#xa;Signed Certificate Timestamp:&#xa;    Version   : v1(0)&#xa;    Log ID    : 56:14:06:9A:2F:D7:C2:EC:D3:F5:E1:BD:44:B2:3E:C7:&#xa;                46:76:B9:BC:99:11:5C:C0:EF:94:98:55:D6:89:D0:DD&#xa;    Timestamp : Oct  3 18:29:35.938 2019 GMT&#xa;    Extensions: none&#xa;    Signature : ecdsa-with-SHA256&#xa;                30:44:02:20:79:75:C8:E9:D2:B5:9D:02:B2:05:B4:C6:&#xa;                FC:53:50:58:16:14:A0:67:97:64:34:04:1A:98:AB:A1:&#xa;                D2:C5:6B:AA:02:20:47:3F:D9:0F:D4:99:A2:97:AC:85:&#xa;                CA:FD:1D:99:F5:8B:D4:E9:73:FE:C7:8E:FA:A1:41:D0:&#xa;                23:E1:D1:7E:E5:87&#xa;Signed Certificate Timestamp:&#xa;    Version   : v1(0)&#xa;    Log ID    : A4:B9:09:90:B4:18:58:14:87:BB:13:A2:CC:67:70:0A:&#xa;                3C:35:98:04:F9:1B:DF:B8:E3:77:CD:0E:C8:0D:DC:10&#xa;    Timestamp : Oct  3 18:29:35.893 2019 GMT&#xa;    Extensions: none&#xa;    Signature : ecdsa-with-SHA256&#xa;                30:45:02:20:4D:DB:32:0C:2F:66:8E:EA:7D:85:F6:93:&#xa;                4B:55:64:67:A5:8C:76:B1:C7:8C:3C:00:F9:7F:60:D1:&#xa;                F9:FD:F8:6C:02:21:00:A5:C3:91:78:B2:D5:D4:33:C5:&#xa;                C5:2A:76:C7:A8:B2:E7:1E:28:86:EB:01:AA:00:07:1C:&#xa;                DB:3F:22:D1:17:CA:A6</elem>
+<elem key="name">CT Precertificate SCTs</elem>
+</table>
+<table>
+<elem key="critical">true</elem>
+<elem key="value">Digital Signature, Key Encipherment</elem>
+<elem key="name">X509v3 Key Usage</elem>
+</table>
+<table>
+<elem key="value">TLS Web Server Authentication, TLS Web Client Authentication</elem>
+<elem key="name">X509v3 Extended Key Usage</elem>
+</table>
+<table>
+<elem key="value">&#xa;Full Name:&#xa;  URI:http://crl.entrust.net/level1k.crl&#xa;</elem>
+<elem key="name">X509v3 CRL Distribution Points</elem>
+</table>
+<table>
+<elem key="value">Policy: 2.16.840.1.114028.10.1.5&#xa;  CPS: http://www.entrust.net/rpa&#xa;Policy: 2.23.140.1.2.2&#xa;</elem>
+<elem key="name">X509v3 Certificate Policies</elem>
+</table>
+<table>
+<elem key="value">OCSP - URI:http://ocsp.entrust.net&#xa;CA Issuers - URI:http://aia.entrust.net/l1k-chain256.cer&#xa;</elem>
+<elem key="name">Authority Information Access</elem>
+</table>
+<table>
+<elem key="value">keyid:82:A2:70:74:DD:BC:53:3F:CF:7B:D4:F7:CD:7F:A7:60:C6:0A:4C:BF&#xa;</elem>
+<elem key="name">X509v3 Authority Key Identifier</elem>
+</table>
+<table>
+<elem key="value">F2:20:1A:08:EA:F9:0B:F3:B4:6F:DB:05:99:F7:09:8D:D7:74:CE:58</elem>
+<elem key="name">X509v3 Subject Key Identifier</elem>
+</table>
+<table>
+<elem key="value">CA:FALSE</elem>
+<elem key="name">X509v3 Basic Constraints</elem>
+</table>
+</table>
+<elem key="sig_algo">sha256WithRSAEncryption</elem>
+<table key="validity">
+<elem key="notBefore">2019-10-03T17:59:34</elem>
+<elem key="notAfter">2021-10-03T18:29:33</elem>
+</table>
+<elem key="md5">72065016770c43c04904fbcc55c90cfb</elem>
+<elem key="sha1">b09314e1f6d6bd198149acfe0bb1d0432a15a4b7</elem>
+<elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIHZjCCBk6gAwIBAgIQJ3O4hmpaXkYAAAAAUPgipjANBgkqhkiG9w0BAQsFADCB&#xa;ujELMAkGA1UEBhMCVVMxFjAUBgNVBAoTDUVudHJ1c3QsIEluYy4xKDAmBgNVBAsT&#xa;H1NlZSB3d3cuZW50cnVzdC5uZXQvbGVnYWwtdGVybXMxOTA3BgNVBAsTMChjKSAy&#xa;MDEyIEVudHJ1c3QsIEluYy4gLSBmb3IgYXV0aG9yaXplZCB1c2Ugb25seTEuMCwG&#xa;A1UEAxMlRW50cnVzdCBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eSAtIEwxSzAeFw0x&#xa;OTEwMDMxNzU5MzRaFw0yMTEwMDMxODI5MzNaMHYxCzAJBgNVBAYTAlVTMQ4wDAYD&#xa;VQQIEwVUZXhhczETMBEGA1UEBxMKRm9ydCBXb3J0aDEeMBwGA1UEChMVQW1lcmlj&#xa;YW4gQWlybGluZXMgSW5jMSIwIAYDVQQDExl0ZWNobm9sb2d5c2VydmljZXMuYWEu&#xa;Y29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjVtT7o6Xh8rBHQBF&#xa;gN3WRGytPGj3RRH3itEkCnTDhxXa9UmUHrN7w4LxiWQIwe/yLEpVRnP5p06rHMTe&#xa;b8w/73tBYXr9z7kg+5TgL4VnFW4uKI1RZlfAnLkFJBJs2YUtBCt3kze1eLSTGKHP&#xa;WX9+uA+kLjSH41GCBId6YjZZzgTQkUaIiF2wF6bcbXcf8UBIniz8Q3WMcXTbTi8u&#xa;vXql6Pw82f7+qZEDsdFp+OHMR57zMCJK3nXUtXMrS/RbKWHlJm6dJeFAxLG/95hr&#xa;fLa319MlxxO8+ZMyCjCC3nIMffOxgv3rNSQcS3OV8bgFgIS1bP0cX6F/dn0EVqR1&#xa;QZ0D+QIDAQABo4IDqTCCA6UwQwYDVR0RBDwwOoIZdGVjaG5vbG9neXNlcnZpY2Vz&#xa;LmFhLmNvbYIdd3d3LnRlY2hub2xvZ3lzZXJ2aWNlcy5hYS5jb20wggH2BgorBgEE&#xa;AdZ5AgQCBIIB5gSCAeIB4AB3AFWB1MIWkDYBSuoLm1c8U/DA5Dh4cCUIFy+jqh0H&#xa;E9MMAAABbZLibikAAAQDAEgwRgIhAOUYB8LpYEal062qKtCVX2z4DhsQHxPqf4+I&#xa;Fo+1renSAiEAhJZW8aI7+Ex/7F6E/cVEavYZoqP/REOz7D7eR3f/BL0AdgBElGUu&#xa;sO7Or8RAB9io/ijA2uaCvtjLMbU/0zOWtbaBqAAAAW2S4m4QAAAEAwBHMEUCIQDr&#xa;MfrhDd2sGEYd7GoCqgas6iex9wxmFfg/GPlu0JrcigIgVfdOt2sK3dnF/KZCDdGd&#xa;JG93s9l31IOy3xuQk6LD5q8AdQBWFAaaL9fC7NP14b1Esj7HRna5vJkRXMDvlJhV&#xa;1onQ3QAAAW2S4m5CAAAEAwBGMEQCIHl1yOnStZ0CsgW0xvxTUFgWFKBnl2Q0BBqY&#xa;q6HSxWuqAiBHP9kP1Jmil6yFyv0dmfWL1Olz/seO+qFB0CPh0X7lhwB2AKS5CZC0&#xa;GFgUh7sTosxncAo8NZgE+RvfuON3zQ7IDdwQAAABbZLibhUAAAQDAEcwRQIgTdsy&#xa;DC9mjup9hfaTS1VkZ6WMdrHHjDwA+X9g0fn9+GwCIQClw5F4stXUM8XFKnbHqLLn&#xa;HiiG6wGqAAcc2z8i0RfKpjAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYB&#xa;BQUHAwEGCCsGAQUFBwMCMDMGA1UdHwQsMCowKKAmoCSGImh0dHA6Ly9jcmwuZW50&#xa;cnVzdC5uZXQvbGV2ZWwxay5jcmwwSwYDVR0gBEQwQjA2BgpghkgBhvpsCgEFMCgw&#xa;JgYIKwYBBQUHAgEWGmh0dHA6Ly93d3cuZW50cnVzdC5uZXQvcnBhMAgGBmeBDAEC&#xa;AjBoBggrBgEFBQcBAQRcMFowIwYIKwYBBQUHMAGGF2h0dHA6Ly9vY3NwLmVudHJ1&#xa;c3QubmV0MDMGCCsGAQUFBzAChidodHRwOi8vYWlhLmVudHJ1c3QubmV0L2wxay1j&#xa;aGFpbjI1Ni5jZXIwHwYDVR0jBBgwFoAUgqJwdN28Uz/Pe9T3zX+nYMYKTL8wHQYD&#xa;VR0OBBYEFPIgGgjq+QvztG/bBZn3CY3XdM5YMAkGA1UdEwQCMAAwDQYJKoZIhvcN&#xa;AQELBQADggEBAApR/BWEj++AE2OiKUTbV7LvlM59p/BeK/fl1tRHhmo7XOnAA88N&#xa;cze0NzcmrTNGXDY5MDoGD0TFLAtxRL/cBXT1JioAum2CviM80mPcihtFUrtqBh82&#xa;KKnZQqeYSBaUMpWkVJMy/pCQEgoQbdJiBQ5vp+JQ9JulQf2F1n0PzVXVeiSIijjK&#xa;cnzuunRntsyhhlvyiwKyvJWvfGqC5Iq7+pGVLgN953g/m7Q7VcAcr4HykwEG5KG/&#xa;YJl18cL0gLIhZyyHePm7/iAj/WtCVEiS0FJo9iOqE6Ksy+I/+rmZ3J85X/B8+vv7&#xa;yXlXR8qybqUFVpEsfy+INNtNZ6/MYau9hLI=&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
+</script><script id="ssl-date" output="TLS randomness does not represent time"></script></port>
+</ports>
+<os><portused state="open" proto="tcp" portid="80"/>
+<osmatch name="Apple iOS 4.3.1 - 4.3.5" accuracy="94" line="3778">
+<osclass type="phone" vendor="Apple" osfamily="iOS" osgen="4.X" accuracy="94"><cpe>cpe:/o:apple:iphone_os:4</cpe></osclass>
+<osclass type="media device" vendor="Apple" osfamily="iOS" osgen="4.X" accuracy="94"><cpe>cpe:/o:apple:iphone_os:4</cpe></osclass>
+</osmatch>
+<osmatch name="Apple iOS 5.1.1" accuracy="94" line="3995">
+<osclass type="media device" vendor="Apple" osfamily="iOS" osgen="5.X" accuracy="94"><cpe>cpe:/o:apple:iphone_os:5.1.1</cpe></osclass>
+<osclass type="phone" vendor="Apple" osfamily="iOS" osgen="5.X" accuracy="94"><cpe>cpe:/o:apple:iphone_os:5.1.1</cpe></osclass>
+</osmatch>
+<osmatch name="Apple iOS 6" accuracy="94" line="4066">
+<osclass type="media device" vendor="Apple" osfamily="iOS" osgen="6.X" accuracy="94"><cpe>cpe:/o:apple:iphone_os:6</cpe></osclass>
+</osmatch>
+<osmatch name="Apple iOS 7.1.1" accuracy="94" line="4193">
+<osclass type="phone" vendor="Apple" osfamily="iOS" osgen="7.X" accuracy="94"><cpe>cpe:/o:apple:iphone_os:7.1.1</cpe></osclass>
+</osmatch>
+<osmatch name="Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0)" accuracy="94" line="4326">
+<osclass type="phone" vendor="Apple" osfamily="iOS" osgen="8.X" accuracy="94"><cpe>cpe:/o:apple:iphone_os:8</cpe></osclass>
+<osclass type="phone" vendor="Apple" osfamily="iOS" osgen="9.X" accuracy="94"><cpe>cpe:/o:apple:iphone_os:9</cpe></osclass>
+<osclass type="general purpose" vendor="Apple" osfamily="OS X" osgen="10.10.X" accuracy="94"><cpe>cpe:/o:apple:mac_os_x:10.10</cpe></osclass>
+</osmatch>
+<osmatch name="Netgear WNR834Bv2 WAP" accuracy="94" line="87949">
+<osclass type="WAP" vendor="Netgear" osfamily="embedded" accuracy="94"><cpe>cpe:/h:netgear:wnr834bv2</cpe></osclass>
+</osmatch>
+<osmatch name="Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0)" accuracy="94" line="4044">
+<osclass type="media device" vendor="Apple" osfamily="iOS" osgen="5.X" accuracy="94"><cpe>cpe:/o:apple:iphone_os:5</cpe></osclass>
+<osclass type="general purpose" vendor="Apple" osfamily="OS X" osgen="10.8.X" accuracy="94"><cpe>cpe:/o:apple:mac_os_x:10.8</cpe></osclass>
+<osclass type="general purpose" vendor="Apple" osfamily="OS X" osgen="10.9.X" accuracy="94"><cpe>cpe:/o:apple:mac_os_x:10.9</cpe></osclass>
+</osmatch>
+<osmatch name="Netasq U70 firewall" accuracy="94" line="87130">
+<osclass type="firewall" vendor="Netasq" osfamily="embedded" accuracy="94"><cpe>cpe:/h:netasq:u70</cpe></osclass>
+</osmatch>
+<osmatch name="Cisco 7200 router (IOS 12.4)" accuracy="93" line="16198">
+<osclass type="router" vendor="Cisco" osfamily="IOS" osgen="12.X" accuracy="93"><cpe>cpe:/o:cisco:ios:12.4</cpe></osclass>
+</osmatch>
+<osmatch name="AirSpan ProST WiMAX access point" accuracy="92" line="1873">
+<osclass type="WAP" vendor="AirSpan" osfamily="embedded" accuracy="92"/>
+</osmatch>
+</os>
+<uptime seconds="1049177" lastboot="Tue Aug 18 08:17:14 2020"/>
+<distance value="22"/>
+<tcpsequence index="238" difficulty="Good luck!" values="14258341,73B606B2,D964187C,3276A91F,D64FE5D2"/>
+<ipidsequence class="Randomized" values="794F,D668,7ABE,7B25,D8DF"/>
+<tcptssequence class="1000HZ" values="3E88F2A2,3E88F306,3E88F36B,3E88F3D2,3E88F431"/>
+<trace port="443" proto="tcp">
+<hop ttl="2" ipaddr="83.212.96.2" rtt="1.12"/>
+<hop ttl="3" ipaddr="62.217.100.100" rtt="1.32" host="eier-ypedcfs1-AE.backbone.grnet.gr"/>
+<hop ttl="4" ipaddr="83.97.88.65" rtt="1.72" host="grnet-ias-geant-gw.mx1.ath2.gr.geant.net"/>
+<hop ttl="5" ipaddr="62.40.98.141" rtt="28.47" host="ae0.mx1.ath2.gr.geant.net"/>
+<hop ttl="6" ipaddr="62.40.98.147" rtt="30.19" host="ae0.mx1.vie.at.geant.net"/>
+<hop ttl="7" ipaddr="154.54.59.182" rtt="35.46" host="be3462.ccr22.muc03.atlas.cogentco.com"/>
+<hop ttl="8" ipaddr="154.54.36.253" rtt="39.17" host="be2960.ccr42.fra03.atlas.cogentco.com"/>
+<hop ttl="9" ipaddr="154.54.36.253" rtt="39.54" host="be2960.ccr42.fra03.atlas.cogentco.com"/>
+<hop ttl="10" ipaddr="154.54.27.169" rtt="121.92" host="be3628.ccr42.jfk02.atlas.cogentco.com"/>
+<hop ttl="11" ipaddr="154.54.0.142" rtt="121.14" host="be3496.ccr31.jfk10.atlas.cogentco.com"/>
+<hop ttl="12" ipaddr="154.54.10.98" rtt="121.66" host="att.jfk10.atlas.cogentco.com"/>
+<hop ttl="13" ipaddr="154.54.10.98" rtt="123.14" host="att.jfk10.atlas.cogentco.com"/>
+<hop ttl="14" ipaddr="12.122.28.42" rtt="192.43" host="wswdc22crs.ip.att.net"/>
+<hop ttl="15" ipaddr="12.122.28.42" rtt="190.02" host="wswdc22crs.ip.att.net"/>
+<hop ttl="16" ipaddr="12.122.2.29" rtt="184.74" host="attga21crs.ip.att.net"/>
+<hop ttl="17" ipaddr="12.122.2.110" rtt="193.67" host="dlstx22crs.ip.att.net"/>
+<hop ttl="18" ipaddr="12.122.28.18" rtt="191.64" host="phmaz21crs.ip.att.net"/>
+<hop ttl="19" ipaddr="12.122.28.18" rtt="193.48" host="phmaz21crs.ip.att.net"/>
+<hop ttl="20" ipaddr="12.123.158.57" rtt="187.41"/>
+<hop ttl="21" ipaddr="12.86.182.74" rtt="187.11"/>
+<hop ttl="22" ipaddr="162.92.177.7" rtt="186.84"/>
+</trace>
+<times srtt="187405" rttvar="4482" to="205333"/>
+</host>
+<runstats><finished time="1598777011" timestr="Sun Aug 30 11:43:31 2020" elapsed="35.26" summary="Nmap done at Sun Aug 30 11:43:31 2020; 1 IP address (1 host up) scanned in 35.26 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

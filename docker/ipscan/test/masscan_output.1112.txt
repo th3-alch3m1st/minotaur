@@ -1,0 +1,5 @@
+# Masscan 1.0.6 scan initiated Sun Aug 30 08:42:33 2020
+# Ports scanned: TCP(65535;1-65535) UDP(0;) SCTP(0;) PROTOCOLS(0;)
+Timestamp: 1598776959	Host: 162.92.177.7 ()	Ports: 80/open/tcp//http//
+Timestamp: 1598776962	Host: 162.92.177.7 ()	Ports: 443/open/tcp//https//
+# Masscan done at Sun Aug 30 08:42:56 2020

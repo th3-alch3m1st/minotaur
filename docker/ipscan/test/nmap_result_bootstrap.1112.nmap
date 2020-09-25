@@ -1,0 +1,53 @@
+# Nmap 7.80 scan initiated Sun Aug 30 11:42:57 2020 as: nmap -sSV -T4 -A -p 443,80 --open -o test/nmap_result.1112.txt --stylesheet nmap-bootstrap.xsl -oA test/nmap_result_bootstrap.1112 162.92.177.7
+Nmap scan report for 162.92.177.7
+Host is up (0.19s latency).
+
+PORT    STATE SERVICE        VERSION
+80/tcp  open  http-proxy     F5 BIG-IP load balancer http proxy
+|_http-open-proxy: Proxy might be redirecting requests
+|_http-server-header: BigIP
+|_http-title: Did not follow redirect to https://162.92.177.7/
+|_https-redirect: ERROR: Script execution failed (use -d to debug)
+443/tcp open  ssl/http-proxy F5 BIG-IP load balancer http proxy
+|_http-server-header: BigIP
+| ssl-cert: Subject: commonName=technologyservices.aa.com/organizationName=American Airlines Inc/stateOrProvinceName=Texas/countryName=US
+| Subject Alternative Name: DNS:technologyservices.aa.com, DNS:www.technologyservices.aa.com
+| Not valid before: 2019-10-03T17:59:34
+|_Not valid after:  2021-10-03T18:29:33
+|_ssl-date: TLS randomness does not represent time
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device type: phone|media device|general purpose|WAP
+Running (JUST GUESSING): Apple iOS 4.X|5.X|6.X|7.X|8.X|9.X (94%), Apple OS X 10.10.X (94%), Netgear embedded (94%)
+OS CPE: cpe:/o:apple:iphone_os:4 cpe:/o:apple:iphone_os:5.1.1 cpe:/o:apple:iphone_os:6 cpe:/o:apple:iphone_os:7.1.1 cpe:/o:apple:iphone_os:8 cpe:/o:apple:iphone_os:9 cpe:/o:apple:mac_os_x:10.10 cpe:/h:netgear:wnr834bv2
+Aggressive OS guesses: Apple iOS 4.3.1 - 4.3.5 (94%), Apple iOS 5.1.1 (94%), Apple iOS 6 (94%), Apple iOS 7.1.1 (94%), Apple OS X 10.10 (Yosemite) or iOS 8.3 - 9.0.1 (Darwin 14.0.0 - 15.0.0) (94%), Netgear WNR834Bv2 WAP (94%), Apple OS X 10.8 (Mountain Lion) - 10.9 (Mavericks) or iOS 5.0.1 - 5.1.1 (Darwin 11.0.0 - 13.2.0) (94%), Netasq U70 firewall (94%), Cisco 7200 router (IOS 12.4) (93%), AirSpan ProST WiMAX access point (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 22 hops
+Service Info: Device: load balancer
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+1   ...
+2   1.12 ms   83.212.96.2
+3   1.32 ms   eier-ypedcfs1-AE.backbone.grnet.gr (62.217.100.100)
+4   1.72 ms   grnet-ias-geant-gw.mx1.ath2.gr.geant.net (83.97.88.65)
+5   28.47 ms  ae0.mx1.ath2.gr.geant.net (62.40.98.141)
+6   30.19 ms  ae0.mx1.vie.at.geant.net (62.40.98.147)
+7   35.46 ms  be3462.ccr22.muc03.atlas.cogentco.com (154.54.59.182)
+8   39.17 ms  be2960.ccr42.fra03.atlas.cogentco.com (154.54.36.253)
+9   39.54 ms  be2960.ccr42.fra03.atlas.cogentco.com (154.54.36.253)
+10  121.92 ms be3628.ccr42.jfk02.atlas.cogentco.com (154.54.27.169)
+11  121.14 ms be3496.ccr31.jfk10.atlas.cogentco.com (154.54.0.142)
+12  121.66 ms att.jfk10.atlas.cogentco.com (154.54.10.98)
+13  123.14 ms att.jfk10.atlas.cogentco.com (154.54.10.98)
+14  192.43 ms wswdc22crs.ip.att.net (12.122.28.42)
+15  190.02 ms wswdc22crs.ip.att.net (12.122.28.42)
+16  184.74 ms attga21crs.ip.att.net (12.122.2.29)
+17  193.67 ms dlstx22crs.ip.att.net (12.122.2.110)
+18  191.64 ms phmaz21crs.ip.att.net (12.122.28.18)
+19  193.48 ms phmaz21crs.ip.att.net (12.122.28.18)
+20  187.41 ms 12.123.158.57
+21  187.11 ms 12.86.182.74
+22  186.84 ms 162.92.177.7
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Aug 30 11:43:31 2020 -- 1 IP address (1 host up) scanned in 35.26 seconds
