@@ -60,11 +60,12 @@ def do_work(conn, ch, delivery_tag, body):
     message = option + ' ' + domain + ' ' + date
     app.send.publish(option, message)
 
-    with open('/tools/input/ipranges/' + domain + '/ipv4ranges.txt') as ipranges:
-        for iprange in ipranges:
-            option = 'ip-scan'
-            message = option + ' ' + iprange.rstrip() + ' ' + domain + ' ' + date
-            app.send.publish(option, message)
+    if os.path.exists('/tools/input/ipranges/' + domain + '/ipv4ranges.txt'):
+        with open('/tools/input/ipranges/' + domain + '/ipv4ranges.txt') as ipranges:
+            for iprange in ipranges:
+                option = 'ip-scan'
+                message = option + ' ' + iprange.rstrip() + ' ' + domain + ' ' + date
+                app.send.publish(option, message)
 
 def on_message(ch, method_frame, _header_frame, body, args):
     (conn, thrds) = args

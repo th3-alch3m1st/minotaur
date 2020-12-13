@@ -63,17 +63,12 @@ def do_work(conn, ch, delivery_tag, body):
         ffuf_process.communicate()[0]
         ffuf_process.wait()
 
-        dirsearch_process = Popen(['/tools/dirsearch/dirsearch.py', '-w', '/tools/input/wordlist.txt', '-u', url_to_scan, '--random-agent', '-e', 'php,asp,aspx,jsp,js,ini,html,log,txt,sql,zip,conf,cgi,json,jar,dll,xml,db,py,ashx', '-x', '400,429,501,503,520', '-t', '300', '--plain-text-report=' + filepath + '/' + filename], stderr=STDOUT)
+        dirsearch_process = Popen(['/tools/dirsearch/dirsearch.py', '-w', '/tools/input/wordlist.txt', '-url', url_to_scan, '--random-agent', '-e', '.php,.asp,.aspx,.jsp,.js,.ini,.html,.log,.txt,.sql,.zip,.tar.gz,.rar,.conf,.cgi,.json,.jar,.dll,.xml,.db,.py,.ashx,,/', '-x', '400,429,501,503,520', '-t', '300', '--plain-text-report=' + filepath + '/' + filename], stderr=STDOUT)
         dirsearch_process.communicate()[0]
         dirsearch_process.wait()
 
-
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
-
-#    option = 'dirsearch'
-#    message = option + ' ' + domain + ' ' + date
-#    app.send.publish(option, message)
 
 
 def on_message(ch, method_frame, _header_frame, body, args):

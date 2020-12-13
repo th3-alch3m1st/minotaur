@@ -34,8 +34,9 @@ def do_work(conn, ch, delivery_tag, body):
     #LOGGER.info('Thread id: %s Delivery tag: %s Message body: %s', thread_id, delivery_tag, body)
 
     opt = body.split(" ")
-    domain = opt[1]
-    date = opt[2]
+    subdomain = opt[1]
+    domain = opt[2]
+    date = opt[3]
 
     filepath = '/tools/output/' + domain
     if not os.path.exists(filepath):
@@ -43,47 +44,49 @@ def do_work(conn, ch, delivery_tag, body):
 
     if opt[0] == 'alive':
 
-        input_file = open(filepath + '/subdomains-resolved-' + domain + '.' + date, 'rb')
-        with open(filepath + '/alive-' + domain + '.' + date, 'wb') as out:
-            httprobe_process = Popen(['/go/bin/httprobe', '-p', 'xlarge', '-c', '150', '-t', '15000'], stdin=input_file, stdout=PIPE, stderr=STDOUT)
-            while True:
-                endpoint = httprobe_process.stdout.readline().rstrip()
-                if not endpoint:
-                    break
+        with open(filepath + '/alive-' + domain + '.' + date, 'ab') as out:
+            httprobe_process = Popen(['/go/bin/httprobe', '-p', 'xlarge', '-c', '150', '-t', '15000'], stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+            httprobe_stdout = httprobe_process.communicate(subdomain)[0]
+            endpoints = httprobe_stdout.split()
+            for endpoint in endpoints:
                 option = 'dir-scan'
                 message = option + ' ' + endpoint + ' ' + 'domain'
                 app.send.publish(option, message)
+
+                option = 'httpx'
+                message = option + ' ' + endpoint + ' ' + domain + ' ' + date
+                app.send.publish(option, message)
+
+                option = 'nuclei'
+                message = option + ' ' + endpoint + ' ' + domain + ' ' + date
+                app.send.publish(option, message)
+
                 out.write("%s\n" % endpoint)
 
-        option = 'httpx'
-        message = option + ' ' + domain + ' ' + date
-        app.send.publish(option, message)
-
-        option = 'nuclei'
-        message = option + ' ' + domain + ' ' + date
-        app.send.publish(option, message)
+            # Send to screenshots
+            option = 'screenshots'
+            message = option + ' ' + domain + ' ' + date
+            app.send.publish(option, message)
 
     elif opt[0] == 'httpx':
 
-        input_file = str(filepath + '/alive-' + domain + '.' + date)
-        with open(filepath + '/httpx-' + domain + '.' + date, 'wb') as out:
-            httpx_process = Popen(['/go/bin/httpx', '-l', input_file, '-retries', '4', '-title', '-content-length', '-status-code', '-follow-redirects', '-silent'], stdout=out, stderr=STDOUT)
-            httpx_process.communicate()[0]
+        with open(filepath + '/httpx-' + domain + '.' + date, 'ab') as out:
+            httpx_process = Popen(['/go/bin/httpx', '-retries', '4', '-title', '-content-length', '-status-code', '-follow-redirects', '-silent'], stdin=PIPE, stdout=out, stderr=STDOUT)
+            httpx_process.communicate(subdomain)[0]
             httpx_process.wait()
+            #out.write("%s\n" % result)
 
     elif opt[0] == 'nuclei':
 
-        input_file = str(filepath + '/alive-' + domain + '.' + date)
         filepath = '/tools/output/' + domain + '/nuclei'
         if not os.path.exists(filepath):
             os.makedirs(filepath)
 
-        #./nuclei -l ~/tools/minotaur/docker/output/att.com/alive-att.com.20200519183414 -t 'nuclei-templates/technologies/*.yaml' -c 150 -retries 3 -timeout 10 -o att_technologies.txt
         templates = ['cves', 'files', 'panels', 'security-misconfiguration', 'subdomain-takeover', 'technologies', 'tokens', 'vulnerabilities', 'workflows']
         for template in templates:
-            template_file = '/tools/input/nuclei-templates/' + template + '/'
-            with open(filepath + '/nuclei_' + template + '_' + domain + '.' + date, 'wb') as out:
-                nuclei_process = Popen(['/go/bin/nuclei', '-l', input_file, '-t', template_file, '-c', '151', '-retries', '3', '-timeout', '10', '-silent'], stdout=out, stderr=STDOUT)
+            template_file = '/tools/input/nuclei-templates/' + template + '/' + '*.yaml'
+            with open(filepath + '/nuclei-' + template + '-' + domain + '.' + date, 'ab') as out:
+                nuclei_process = Popen(['/go/bin/nuclei', '-target', subdomain, '-t', template_file, '-c', '151', '-retries', '3', '-timeout', '10', '-silent'], stdout=out, stderr=STDOUT)
                 nuclei_process.communicate()[0]
                 nuclei_process.wait()
 

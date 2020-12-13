@@ -14,4 +14,4 @@ RUN mkdir -p /tools/output
 
 ADD ./consumer.py /tools/
 
-ENTRYPOINT ["python", "/tools/consumer.py", "alive", "httpx", "nuclei"]
+ENTRYPOINT ["python", "/tools/consumer.py", "alive", "httpx", "nuclei", "a"]

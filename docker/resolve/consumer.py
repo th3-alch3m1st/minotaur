@@ -69,13 +69,14 @@ def do_work(conn, ch, delivery_tag, body):
         resolved_subdomains_file.close()
     '''
 
+    with open('/tools/output/' + domain + '/subdomains-resolved-' + domain + '.' + date) as resolved_subdomains:
+        for subdomain in resolved_subdomains:
+            option = 'alive'
+            message = option + ' ' + subdomain.rstrip() + ' ' + domain + ' ' + date
+            app.send.publish(option, message)
+
     cb = functools.partial(ack_message, ch, delivery_tag)
     conn.add_callback_threadsafe(cb)
-
-    option = 'alive'
-    message = option + ' ' + domain + ' ' + date
-    app.send.publish(option, message)
-
 
 def on_message(ch, method_frame, _header_frame, body, args):
     (conn, thrds) = args
